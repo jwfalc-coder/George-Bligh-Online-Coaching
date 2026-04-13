@@ -181,4 +181,4 @@ Fonts: **Barlow Condensed** (headings, all-caps) + **DM Sans** (body, light weig
 
 ---
 
-*Built by Josh Falcon. Questions or changes — raise an issue or push a branch.*
+*Built by Josh Falconer. Questions or changes — raise an issue or push a branch.*
