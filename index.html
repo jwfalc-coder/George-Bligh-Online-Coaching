@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>George Bligh Online Coaching</title>
+  <meta name="description" content="Online personal training and nutrition coaching. Real programmes built around your life." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables & Reset ─────────────────────────────── */
+    :root {
+      --bg:           #1C1A18;
+      --bg-raised:    #242220;
+      --bg-card:      #2C2926;
+      --border:       #3A3632;
+      --border-light: #4A4540;
+      --accent:       #D4823A;
+      --accent-dim:   #A8632B;
+      --accent-glow:  rgba(212,130,58,0.12);
+      --text-primary:   #F0EBE3;
+      --text-secondary: #A89E92;
+      --text-muted:     #6B6059;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --max-width: 1180px;
+      --gutter: clamp(1.5rem, 5vw, 4rem);
+      --nav-height: 72px;
+      --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+      --ease-out: cubic-bezier(0.0,0.0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-height);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    h1, h2, h3, h4, h5 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    p { color: var(--text-secondary); font-weight: 300; }
+    p + p { margin-top: 1rem; }
+    strong { color: var(--text-primary); font-weight: 500; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+    /* ── Scroll reveal ─────────────────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    }
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-reveal-delay="1"] { transition-delay: 0.1s; }
+    [data-reveal-delay="2"] { transition-delay: 0.22s; }
+    [data-reveal-delay="3"] { transition-delay: 0.34s; }
+    [data-reveal-delay="4"] { transition-delay: 0.46s; }
+    [data-reveal-delay="5"] { transition-delay: 0.58s; }
+    [data-reveal-delay="6"] { transition-delay: 0.7s; }
+
+    /* ── Nav ───────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      z-index: 100;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(28,26,24,0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom-color: var(--border);
+    }
+    .nav .container {
+      height: 100%;
+      display: flex;
+      align-items: stretch;
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav__logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.15;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav__logo-name { color: var(--text-primary); font-size: 1.1rem; }
+    .nav__logo-sub  { color: var(--accent); font-size: 0.78rem; letter-spacing: 0.1em; }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .nav__link {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      transition: color 0.25s;
+      position: relative;
+    }
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s var(--ease);
+    }
+    .nav__link:hover { color: var(--text-primary); }
+    .nav__link:hover::after, .nav__link.active::after { width: 100%; }
+    .nav__link.active { color: var(--text-primary); }
+
+    .nav__cta {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.55rem 1.4rem;
+      border-radius: 2px;
+      transition: background 0.25s;
+    }
+    .nav__cta:hover { background: var(--accent-dim); }
+
+    .nav__hamburger {
+      display: none; /* shown via media query at 860px */
+      flex-direction: column;
+      gap: 5.5px;
+      padding: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-primary);
+      transform-origin: center;
+      transition: transform 0.3s var(--ease), opacity 0.2s var(--ease), background 0.2s;
+    }
+
+    /* ── Section helpers ───────────────────────────────── */
+    .section { padding: clamp(5rem,10vw,9rem) 0; }
+    .section--alt { background: var(--bg-raised); }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Image placeholders ────────────────────────────── */
+    .img-ph {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-light);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .img-ph::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 12px,
+        rgba(255,255,255,0.018) 12px, rgba(255,255,255,0.018) 13px
+      );
+    }
+    .img-ph__inner {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+    .img-ph__icon {
+      font-size: 2rem;
+      margin: 0 auto 0.5rem;
+      opacity: 0.35;
+    }
+    .img-ph__label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .img-ph__dim {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      opacity: 0.7;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Buttons ───────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      transition: all 0.25s var(--ease);
+      white-space: nowrap;
+    }
+    .btn--primary { background: var(--accent); color: var(--bg); }
+    .btn--primary:hover { background: var(--accent-dim); transform: translateY(-2px); }
+    .btn--outline {
+      border: 1px solid var(--border-light);
+      color: var(--text-primary);
+    }
+    .btn--outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .btn--ghost {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.25s var(--ease);
+    }
+    .btn--ghost:hover { gap: 0.8rem; }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      padding-top: var(--nav-height);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(212,130,58,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      min-height: calc(100svh - var(--nav-height));
+      gap: 0;
+    }
+
+    .hero__content {
+      padding: clamp(3rem,6vw,6rem) clamp(2rem,4vw,4rem) clamp(3rem,6vw,6rem) 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero__eyebrow-line {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero__eyebrow-text {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero__title {
+      font-size: clamp(4rem,7vw,7.5rem);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero__title em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero__sub {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero__actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .hero__social {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .hero__social-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 0.25rem;
+    }
+    .hero__social-link {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      transition: color 0.25s;
+    }
+    .hero__social-link:hover { color: var(--accent); }
+
+    .hero__image-wrap {
+      position: relative;
+      align-self: stretch;
+      min-height: 600px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .hero__image-ph {
+      flex: 1;
+      border-radius: 0;
+    }
+
+    .hero__image-badge {
+      position: absolute;
+      bottom: 3rem;
+      left: -2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero__badge-stat {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .hero__badge-label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    /* ── STAT STRIP ────────────────────────────────────── */
+    .stats-strip {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+
+    .stats-strip__inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 10%; bottom: 10%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .stat-item__num {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-item__label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────── */
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: center;
+    }
+
+    .about__image-stack {
+      position: relative;
+    }
+
+    .about__img-main {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+    }
+
+    .about__img-secondary {
+      position: absolute;
+      bottom: -2rem;
+      right: -2rem;
+      width: 55%;
+      aspect-ratio: 1/1;
+      border-radius: 4px;
+      border: 4px solid var(--bg);
+    }
+
+    .about__title {
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    .about__body {
+      margin-bottom: 2rem;
+    }
+
+    .about__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .about__tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.35rem 0.85rem;
+    }
+
+    /* ── SERVICES ──────────────────────────────────────── */
+    .services__header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: clamp(3rem,6vw,5rem);
+    }
+
+    .services__title {
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      line-height: 1;
+    }
+
+    .services__intro {
+      padding-bottom: 0.5rem;
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      padding: 2.5rem 2rem;
+      transition: background 0.3s var(--ease);
+      position: relative;
+    }
+
+    .service-card:hover { background: var(--bg-raised); }
+
+    .service-card:hover .service-card__arrow {
+      transform: translate(3px, -3px);
+    }
+
+    .service-card__num {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card__icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-card__title {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card__body {
+      font-size: 0.875rem;
+      line-height: 1.7;
+    }
+
+    .service-card__arrow {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      font-size: 1rem;
+      color: var(--accent);
+      transition: transform 0.25s var(--ease);
+      opacity: 0;
+    }
+
+    .service-card:hover .service-card__arrow { opacity: 1; }
+
+    /* ── RESULTS ───────────────────────────────────────── */
+    .results__grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(3rem,6vw,7rem);
+      align-items: start;
+    }
+
+    .results__title {
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .results__outcomes {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .outcome-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.1rem 1.5rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.25s;
+    }
+
+    .outcome-item:last-child { border-bottom: none; }
+    .outcome-item:hover { background: var(--bg-raised); }
+
+    .outcome-item__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .outcome-item__label {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    .results__testimonial {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 3rem;
+      position: relative;
+    }
+
+    .results__quote-mark {
+      font-family: var(--font-display);
+      font-size: 7rem;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: 0.15;
+      line-height: 0.6;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .results__quote-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-primary);
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .results__quote-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .results__author-ph {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .results__author-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .results__author-detail {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── GALLERY ───────────────────────────────────────── */
+    .gallery__title {
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      margin-bottom: clamp(2.5rem,5vw,4rem);
+    }
+
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 1rem;
+    }
+
+    .gallery__item { border-radius: 4px; overflow: hidden; }
+    .gallery__item--tall { grid-row: span 2; }
+    .gallery__item--wide { grid-column: span 2; }
+    .gallery__item .img-ph { height: 100%; border-radius: 0; }
+
+    /* ── CONTACT ───────────────────────────────────────── */
+    .contact__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem,6vw,7rem);
+      align-items: start;
+    }
+
+    .contact__title {
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact__methods {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .contact__method {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .contact__method:hover {
+      border-color: var(--border-light);
+      transform: translateX(4px);
+    }
+
+    .contact__method-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact__method-text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .contact__method-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.85rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      transition: border-color 0.25s;
+      width: 100%;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-textarea { resize: vertical; min-height: 140px; }
+
+    .form-submit {
+      align-self: flex-start;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    .footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer__logo {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .footer__logo span { color: var(--accent); }
+
+    .footer__copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .footer__social-link {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.25s;
+    }
+    .footer__social-link:hover { color: var(--accent); }
+
+    /* ── Mobile menu animation ─────────────────────────── */
+    /* Menu panel sits off-screen and slides down when open */
+    .nav__links {
+      transition: none; /* desktop: no transition needed */
+    }
+
+    @media (max-width: 860px) {
+      /* Hide full nav links, show hamburger at stacking breakpoint */
+      .nav__links {
+        display: flex !important; /* keep in DOM for animation */
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0; right: 0;
+        background: rgba(28,26,24,0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 0 var(--gutter);
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+        align-items: flex-start;
+        /* Closed state */
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition:
+          max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity    0.28s cubic-bezier(0.4, 0, 0.2, 1),
+          transform  0.32s cubic-bezier(0.4, 0, 0.2, 1),
+          padding    0.38s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+      }
+
+      .nav.mobile-open .nav__links {
+        max-height: 420px;
+        opacity: 1;
+        transform: translateY(0);
+        padding: 1.5rem var(--gutter) 1.75rem;
+        pointer-events: auto;
+        gap: 1.25rem;
+      }
+
+      .nav__hamburger { display: flex; }
+
+      /* Hamburger → X morph */
+      .nav.mobile-open .nav__hamburger span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .nav.mobile-open .nav__hamburger span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .nav.mobile-open .nav__hamburger span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+
+      .nav__hamburger span {
+        transition: transform 0.3s var(--ease), opacity 0.2s var(--ease), background 0.2s;
+      }
+
+      /* Book In CTA inside the mobile menu */
+      .nav.mobile-open .nav__cta {
+        align-self: stretch;
+        text-align: center;
+        padding: 0.75rem;
+        margin-top: 0.25rem;
+      }
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+
+    /* Large tablets / small desktops */
+    @media (max-width: 1100px) {
+      .hero__title { font-size: clamp(3.2rem, 6.5vw, 6rem); }
+      .nav__links { gap: 1.25rem; }
+    }
+
+    /* Stacking breakpoint — everything goes single column */
+    @media (max-width: 860px) {
+      :root { --nav-height: 68px; }
+
+      /* Hero: stack vertically */
+      .hero { min-height: auto; padding-bottom: 0; }
+      .hero__inner { grid-template-columns: 1fr; min-height: auto; }
+      .hero__content { padding: 3.5rem 0 2.5rem !important; }
+      .hero__sub { max-width: 100%; }
+      .hero__image-wrap { min-height: 420px; width: 100%; position: relative; }
+      .hero__image-ph { min-height: 420px; }
+      .hero__image-badge { left: var(--gutter); bottom: 1.5rem; }
+
+      /* About */
+      .about__grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about__image-stack { padding-bottom: 3rem; }
+      .about__img-secondary { right: 2rem; bottom: -1rem; width: 45%; }
+
+      /* Services */
+      .services__header { grid-template-columns: 1fr; gap: 1rem; }
+      .services__grid { grid-template-columns: 1fr 1fr; }
+
+      /* Stats */
+      .stats-strip__inner { grid-template-columns: repeat(2, 1fr); gap: 2rem 0; }
+      .stat-item + .stat-item::before { display: none; }
+      .stat-item { padding: 0 1rem; }
+
+      /* Results */
+      .results__grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      /* Contact */
+      .contact__grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      /* Footer */
+      .footer__inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+      /* Gallery: 3-col square grid */
+      .gallery__grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: unset;
+        gap: 0.5rem;
+      }
+      .gallery__item,
+      .gallery__item--tall,
+      .gallery__item--wide {
+        grid-column: span 1;
+        grid-row: span 1;
+        aspect-ratio: 1 / 1;
+      }
+      .gallery__item .img-ph { height: 100%; border-radius: 0; }
+    }
+
+    /* Smaller mobile */
+    @media (max-width: 560px) {
+      .hero__actions    { flex-direction: column; align-items: flex-start; }
+      .hero__actions .btn { width: 100%; justify-content: center; }
+      .hero__social     { flex-wrap: wrap; gap: 0.75rem; }
+      .hero__image-wrap { min-height: 300px; }
+      .hero__image-ph   { min-height: 300px; }
+
+      .services__grid { grid-template-columns: 1fr; }
+      .stats-strip { padding: 2rem 0; }
+
+      /* About: drop secondary image entirely on small screens */
+      .about__img-secondary { display: none; }
+      .about__image-stack   { padding-bottom: 0; }
+
+      /* Gallery: 2-col square */
+      .gallery__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+      }
+
+      /* Contact */
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; justify-content: center; }
+      .results__testimonial { padding: 2rem 1.5rem; }
+    }
+
+    /* Very small */
+    @media (max-width: 380px) {
+      .gallery__grid { grid-template-columns: 1fr; }
+      .hero__social { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVIGATION ──────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="#home" class="nav__logo">
+          <span class="nav__logo-name">George Bligh</span>
+          <span class="nav__logo-sub">Online Coaching</span>
+        </a>
+        <div class="nav__links" id="navLinks">
+          <a href="#about"    class="nav__link">About</a>
+          <a href="#services" class="nav__link">Services</a>
+          <a href="#results"  class="nav__link">Results</a>
+          <a href="#gallery"  class="nav__link">Gallery</a>
+          <a href="#contact"  class="nav__link">Contact</a>
+          <a href="#contact"  class="nav__cta">Book In</a>
+        </div>
+        <button class="nav__hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────────────── -->
+  <section id="home" class="hero">
+    <div class="hero__inner container">
+      <div class="hero__content">
+        <div class="hero__eyebrow" style="animation:fadeUp 0.7s both;">
+          <span class="hero__eyebrow-line"></span>
+          <span class="hero__eyebrow-text">Online Personal Training</span>
+        </div>
+
+        <h1 class="hero__title" style="animation:fadeUp 0.7s 0.1s both;">
+          Train Smart.<br>
+          <em>Live Better.</em>
+        </h1>
+
+        <p class="hero__sub" style="animation:fadeUp 0.7s 0.22s both;">
+          Personalised online coaching built around your life — not the other way around. Real programmes, real accountability, real results.
+        </p>
+
+        <div class="hero__actions" style="animation:fadeUp 0.7s 0.34s both;">
+          <a href="#contact" class="btn btn--primary">Book a Free Call</a>
+          <a href="#services" class="btn btn--outline">See What's Included</a>
+        </div>
+
+        <div class="hero__social" style="animation:fadeUp 0.7s 0.5s both;">
+          <span class="hero__social-label">Find me on</span>
+          <a href="#" class="hero__social-link">Instagram</a>
+          <a href="#" class="hero__social-link">TikTok</a>
+          <a href="#" class="hero__social-link">Facebook</a>
+          <a href="#" class="hero__social-link">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="hero__image-wrap" style="animation:fadeIn 1s 0.2s both;">
+        <div class="img-ph hero__image-ph">
+          <div class="img-ph__inner">
+            <div class="img-ph__icon">📸</div>
+            <div class="img-ph__label">Hero Photo</div>
+            <div class="img-ph__dim">Recommended: 900 × 1080px</div>
+          </div>
+        </div>
+        <div class="hero__image-badge">
+          <div class="hero__badge-stat">5+</div>
+          <div class="hero__badge-label">Years Coaching</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS STRIP ──────────────────────────────────────── -->
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-strip__inner">
+        <div class="stat-item" data-reveal>
+          <div class="stat-item__num">5+</div>
+          <div class="stat-item__label">Years Experience</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="1">
+          <div class="stat-item__num">1-to-1</div>
+          <div class="stat-item__label">Personalised Coaching</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="2">
+          <div class="stat-item__num">100%</div>
+          <div class="stat-item__label">Online Flexibility</div>
+        </div>
+        <div class="stat-item" data-reveal data-reveal-delay="3">
+          <div class="stat-item__num">24/7</div>
+          <div class="stat-item__label">WhatsApp Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ────────────────────────────────────────────── -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__image-stack" data-reveal>
+          <div class="img-ph about__img-main">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">About Photo (Main)</div>
+              <div class="img-ph__dim">Recommended: 700 × 900px</div>
+            </div>
+          </div>
+          <div class="img-ph about__img-secondary">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Secondary</div>
+              <div class="img-ph__dim">500 × 500px</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label" data-reveal>About George</div>
+          <h2 class="about__title" data-reveal data-reveal-delay="1">Built From<br>Experience.</h2>
+
+          <div class="about__body" data-reveal data-reveal-delay="2">
+            <p>I've been training since the age of 16. I've made every mistake in the book — and more importantly, I've learned exactly how to avoid them. That hard-won knowledge is what I put into every programme I write.</p>
+            <p>For nine years I worked in engineering whilst training and coaching on the side. I know what it's like to be genuinely busy — to have a full diary, a demanding job, and still want to show up for your health. That's why I build programmes around your life, not an idealised version of it.</p>
+            <p>My belief is simple: <strong>you should feel comfortable in how you look and feel.</strong> Whatever your starting point, I'll build something you can stick to — and actually enjoy.</p>
+          </div>
+
+          <div class="about__tags" data-reveal data-reveal-delay="3">
+            <span class="about__tag">Level 2 PT</span>
+            <span class="about__tag">Level 3 PT</span>
+            <span class="about__tag">Nutrition Guidance</span>
+            <span class="about__tag">Online Coaching</span>
+            <span class="about__tag">Coaching Since 2019</span>
+          </div>
+
+          <a href="#contact" class="btn btn--primary" data-reveal data-reveal-delay="4">Work With George</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ─────────────────────────────────────────── -->
+  <section id="services" class="section section--alt">
+    <div class="container">
+      <div class="services__header">
+        <div>
+          <div class="section-label" data-reveal>What's Included</div>
+          <h2 class="services__title" data-reveal data-reveal-delay="1">Everything<br>You Need.</h2>
+        </div>
+        <p class="services__intro" data-reveal data-reveal-delay="2">
+          Every client gets a fully personalised package — no cookie-cutter plans, no generic advice. Pricing is discussed on an initial call once I understand what you need.
+        </p>
+      </div>
+
+      <div class="services__grid">
+        <div class="service-card" data-reveal>
+          <div class="service-card__num">01</div>
+          <div class="service-card__icon">📋</div>
+          <h3 class="service-card__title">Personalised Training Programme</h3>
+          <p class="service-card__body">A programme written specifically for you — your goals, your schedule, your equipment. No guesswork, no generic plans.</p>
+          <span class="service-card__arrow">↗</span>
+        </div>
+        <div class="service-card" data-reveal data-reveal-delay="1">
+          <div class="service-card__num">02</div>
+          <div class="service-card__icon">🥗</div>
+          <h3 class="service-card__title">Nutrition Guidance</h3>
+          <p class="service-card__body">Practical, sustainable nutrition advice that fits your lifestyle. No crash diets, no obsessive tracking — just a smarter way to eat.</p>
+          <span class="service-card__arrow">↗</span>
+        </div>
+        <div class="service-card" data-reveal data-reveal-delay="2">
+          <div class="service-card__num">03</div>
+          <div class="service-card__icon">🎯</div>
+          <h3 class="service-card__title">Exercise Technique Feedback</h3>
+          <p class="service-card__body">Submit form videos and get detailed coaching feedback. Move better, lift safer, and progress faster.</p>
+          <span class="service-card__arrow">↗</span>
+        </div>
+        <div class="service-card" data-reveal data-reveal-delay="3">
+          <div class="service-card__num">04</div>
+          <div class="service-card__icon">📊</div>
+          <h3 class="service-card__title">Weekly Check-Ins</h3>
+          <p class="service-card__body">Regular structured check-ins to review progress, adjust the programme, and keep you on track every single week.</p>
+          <span class="service-card__arrow">↗</span>
+        </div>
+        <div class="service-card" data-reveal data-reveal-delay="4">
+          <div class="service-card__num">05</div>
+          <div class="service-card__icon">📈</div>
+          <h3 class="service-card__title">Progress Tracking</h3>
+          <p class="service-card__body">See exactly where you started and how far you've come. Data-driven progress that keeps motivation high and the goal clear.</p>
+          <span class="service-card__arrow">↗</span>
+        </div>
+        <div class="service-card" data-reveal data-reveal-delay="5">
+          <div class="service-card__num">06</div>
+          <div class="service-card__icon">💬</div>
+          <h3 class="service-card__title">Accountability & Support</h3>
+          <p class="service-card__body">Always on hand via WhatsApp whenever you need guidance, a nudge, or just someone in your corner on the tough days.</p>
+          <span class="service-card__arrow">↗</span>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:3rem;" data-reveal>
+        <a href="#contact" class="btn btn--primary">Book Your Free Call</a>
+        <p style="margin-top:1rem; font-size:0.8rem; color:var(--text-muted);">Pricing is tailored to your needs and discussed on your initial call.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESULTS ───────────────────────────────────────────── -->
+  <section id="results" class="section">
+    <div class="container">
+      <div class="results__grid">
+        <div>
+          <div class="section-label" data-reveal>What Clients Achieve</div>
+          <h2 class="results__title" data-reveal data-reveal-delay="1">Real Results.<br>Real People.</h2>
+          <p data-reveal data-reveal-delay="2">Every client is different — different goals, different lifestyles. But consistent, measurable outcomes are what every programme is built to deliver.</p>
+
+          <div class="results__outcomes" data-reveal data-reveal-delay="3">
+            <div class="outcome-item"><span class="outcome-item__dot"></span><span class="outcome-item__label">Increased muscle mass and improved body composition</span></div>
+            <div class="outcome-item"><span class="outcome-item__dot"></span><span class="outcome-item__label">Higher strength levels across key lifts</span></div>
+            <div class="outcome-item"><span class="outcome-item__dot"></span><span class="outcome-item__label">Reduced body fat percentage</span></div>
+            <div class="outcome-item"><span class="outcome-item__dot"></span><span class="outcome-item__label">Better daily energy and reduced stress</span></div>
+            <div class="outcome-item"><span class="outcome-item__dot"></span><span class="outcome-item__label">Sustainable consistency built over time</span></div>
+            <div class="outcome-item"><span class="outcome-item__dot"></span><span class="outcome-item__label">A healthier, more enjoyable lifestyle overall</span></div>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="2">
+          <div class="results__testimonial">
+            <span class="results__quote-mark">"</span>
+            <p class="results__quote-text">Placeholder testimonial — George to provide. A short, genuine quote from a real client about their experience, their results, or what made working with George different.</p>
+            <div class="results__quote-author">
+              <div class="img-ph results__author-ph">
+                <span style="font-size:0.6rem;color:var(--text-muted);">48×48</span>
+              </div>
+              <div>
+                <div class="results__author-name">Client Name</div>
+                <div class="results__author-detail">Goal / context — e.g. "Lost 12kg, built consistent training habit"</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem; text-align:right;">
+            <a href="#contact" class="btn--ghost">Start Your Journey</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ───────────────────────────────────────────── -->
+  <section id="gallery" class="section section--alt">
+    <div class="container">
+      <div class="section-label" data-reveal>Gallery</div>
+      <h2 class="gallery__title" data-reveal data-reveal-delay="1">In Action.</h2>
+
+      <div class="gallery__grid">
+        <div class="gallery__item gallery__item--tall" data-reveal>
+          <div class="img-ph" style="height:100%">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Portrait Photo</div>
+              <div class="img-ph__dim">600 × 1160px</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="1">
+          <div class="img-ph" style="height:100%">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Wide Action Shot</div>
+              <div class="img-ph__dim">1160 × 560px</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__item" data-reveal data-reveal-delay="2">
+          <div class="img-ph" style="height:100%">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Photo</div>
+              <div class="img-ph__dim">580 × 560px</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__item" data-reveal data-reveal-delay="1">
+          <div class="img-ph" style="height:100%">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Photo</div>
+              <div class="img-ph__dim">580 × 280px</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__item" data-reveal data-reveal-delay="2">
+          <div class="img-ph" style="height:100%">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Photo</div>
+              <div class="img-ph__dim">580 × 280px</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery__item" data-reveal data-reveal-delay="3">
+          <div class="img-ph" style="height:100%">
+            <div class="img-ph__inner">
+              <div class="img-ph__icon">📸</div>
+              <div class="img-ph__label">Photo</div>
+              <div class="img-ph__dim">580 × 280px</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────── -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact__grid">
+        <div>
+          <div class="section-label" data-reveal>Get In Touch</div>
+          <h2 class="contact__title" data-reveal data-reveal-delay="1">Ready to<br>Get Started?</h2>
+          <p data-reveal data-reveal-delay="2">
+            The first step is a free call to talk through your goals, your lifestyle, and whether we're the right fit. No hard sell, no pressure.
+          </p>
+          <p data-reveal data-reveal-delay="2">
+            Prefer to message first? Find George on Instagram or drop a WhatsApp — he'll get back to you.
+          </p>
+
+          <div class="contact__methods" data-reveal data-reveal-delay="3">
+            <a href="tel:+44XXXXXXXXXX" class="contact__method">
+              <span class="contact__method-icon">📞</span>
+              <div class="contact__method-text">
+                <span class="contact__method-label">Phone</span>
+                +44 XXXX XXXXXX
+              </div>
+            </a>
+            <a href="mailto:george@example.com" class="contact__method">
+              <span class="contact__method-icon">✉️</span>
+              <div class="contact__method-text">
+                <span class="contact__method-label">Email</span>
+                george@example.com
+              </div>
+            </a>
+            <a href="https://wa.me/44XXXXXXXXXX" class="contact__method">
+              <span class="contact__method-icon">💬</span>
+              <div class="contact__method-text">
+                <span class="contact__method-label">WhatsApp</span>
+                Message George directly
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="2">
+          <form class="contact-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" placeholder="Your first name" />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" placeholder="Your last name" />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" placeholder="your@email.com" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Phone (optional)</label>
+              <input type="tel" class="form-input" placeholder="+44 XXXX XXXXXX" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Tell George a bit about your goals</label>
+              <textarea class="form-textarea" placeholder="What do you want to achieve? Where are you starting from?"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary form-submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logo">George Bligh <span>Online Coaching</span></div>
+        <p class="footer__copy">© 2025 George Bligh Online Coaching. Based in Portsmouth.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social-link">Instagram</a>
+          <a href="#" class="footer__social-link">TikTok</a>
+          <a href="#" class="footer__social-link">Facebook</a>
+          <a href="#" class="footer__social-link">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Hamburger — toggle open/close with X morph
+    const hamburger = document.getElementById('hamburger');
+    hamburger.addEventListener('click', () => {
+      const open = nav.classList.toggle('mobile-open');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+
+    // Close menu on any nav link click
+    document.querySelectorAll('.nav__link, .nav__cta').forEach(l => {
+      l.addEventListener('click', () => {
+        nav.classList.remove('mobile-open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    // Close menu if viewport resizes back to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 860) {
+        nav.classList.remove('mobile-open');
+        hamburger.setAttribute('aria-expanded', false);
+      }
+    }, { passive: true });
+
+    // Scroll reveal
+    const ro = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('revealed'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => ro.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav__link[href^="#"]');
+    const so = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => so.observe(s));
+
+    // Contact form
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Sending…'; btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Message Sent ✓';
+        form.reset();
+        setTimeout(() => { btn.textContent = 'Send Message'; btn.disabled = false; }, 3000);
+      }, 1200);
+    });
+  </script>
+
+</body>
+</html>
