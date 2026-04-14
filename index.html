@@ -1366,10 +1366,15 @@
             <div class="results__quote-author">
               <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;" aria-hidden="true">
                 <circle cx="24" cy="24" r="24" fill="#3A3632"/>
-                <!-- Head -->
-                <circle cx="24" cy="19" r="7" fill="#6B6059"/>
-                <!-- Shoulders -->
-                <path d="M8 42c0-8.837 7.163-14 16-14s16 5.163 16 14" fill="#6B6059"/>
+                <clipPath id="avatar-clip">
+                  <circle cx="24" cy="24" r="24"/>
+                </clipPath>
+                <g clip-path="url(#avatar-clip)">
+                  <!-- Head -->
+                  <circle cx="24" cy="18" r="8" fill="#6B6059"/>
+                  <!-- Body — wide enough to bleed past circle edges, tall enough to fill bottom -->
+                  <ellipse cx="24" cy="48" rx="18" ry="14" fill="#6B6059"/>
+                </g>
               </svg>
               <div>
                 <div class="results__author-name">Harry</div>
