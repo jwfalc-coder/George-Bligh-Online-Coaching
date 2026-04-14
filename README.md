@@ -21,19 +21,97 @@ Personal training and online coaching website for George Bligh. Built as a singl
 
 ```
 /
-├── index.html          Main site (one-pager with anchor nav)
-├── template.html       Reusable starting point for future pages
-├── style.css           Global design system and component styles
-├── main.js             Global JavaScript (nav, scroll reveal, form)
-├── assets/             Add all images and media here (create folder)
+├── index.html             Main site (one-pager with anchor nav)
+├── template.html          Reusable starting point for future pages
+├── style.css              Global design system and component styles
+├── main.js                Global JavaScript (nav, scroll reveal, form)
+├── .nojekyll              Bypasses Jekyll on GitHub Pages
+├── assets/
 │   ├── images/
-│   └── og-image.jpg    Social share preview image
+│   │   ├── hero.webp          Hero section photo
+│   │   ├── about-main.webp    About section main photo
+│   │   ├── about-secondary.webp
+│   │   ├── gallery-1.webp
+│   │   ├── gallery-2.webp     (and so on)
+│   │   └── og-image.jpg       Social share preview (JPEG, not WebP)
+│   └── favicons/
+│       ├── favicon-32.png
+│       ├── favicon-16.png
+│       └── apple-touch-icon.png
 └── README.md
 ```
 
 ---
 
-## Local Development
+## Images and Assets
+
+Because this is a static site, all images live in the repository under `assets/images/` and are referenced with relative paths in the HTML:
+
+```html
+<img src="assets/images/hero.webp" alt="George Bligh online personal trainer" width="900" height="1080" />
+```
+
+GitHub Pages serves the whole repo as a file tree, so anything committed to the repo is immediately available on the live site after push.
+
+---
+
+### Image formats
+
+Use **WebP** for all photos. It produces smaller file sizes than JPEG or PNG at equivalent quality — typically 25–35% smaller — which matters on mobile connections. The only exception is the Open Graph image (`og-image.jpg`), which should remain JPEG as some social platforms do not support WebP previews.
+
+For the gallery and hero, provide a JPEG fallback using the `<picture>` element for full browser coverage:
+
+```html
+<picture>
+  <source srcset="assets/images/hero.webp" type="image/webp" />
+  <img src="assets/images/hero.jpg" alt="George Bligh online personal trainer" width="900" height="1080" />
+</picture>
+```
+
+---
+
+### Required images and dimensions
+
+| Image | File | Dimensions | Notes |
+|---|---|---|---|
+| Hero photo | `hero.webp` | 900 × 1080px | Portrait, George in action or strong solo shot |
+| About (main) | `about-main.webp` | 700 × 900px | Portrait orientation |
+| About (secondary) | `about-secondary.webp` | 500 × 500px | Optional — can be removed |
+| Gallery 1–6+ | `gallery-1.webp` etc. | Any — see below | Ensure subjects are centred (see note) |
+| Open Graph | `og-image.jpg` | 1200 × 630px | JPEG only, used for social sharing previews |
+| Testimonial avatar | `testimonial-1.webp` | 96 × 96px | Square, will be cropped circular by CSS |
+
+**Gallery note:** on desktop the gallery uses varied aspect ratios (wide, tall, square). On tablet and mobile it reflows to a uniform 1:1 square grid. Make sure the subject in every gallery photo is centred in the frame so it crops cleanly to a square without losing faces or important detail.
+
+---
+
+### Workflow — when George sends photos
+
+1. **Receive** the original files (likely JPEG from a phone)
+2. **Resize** to the target dimensions using [Squoosh](https://squoosh.app) or any image editor
+3. **Compress and convert to WebP** — in Squoosh, select WebP as the output format, quality around 80–85. Target under 200KB per image; the hero can go up to 300KB given its prominence
+4. **Also export a JPEG fallback** at the same dimensions for the `<picture>` element (quality 75–80 in Squoosh)
+5. **Drop files into** `assets/images/` in the repo
+6. **Replace placeholder divs** in `index.html` with proper `<img>` or `<picture>` tags, adding descriptive `alt` text to each
+7. **Commit and push** — the change is live on GitHub Pages within a minute or two
+
+---
+
+### Alt text guidance
+
+Every image needs an `alt` attribute. Keep it descriptive and natural — write what the image actually shows, not keyword strings:
+
+```html
+<!-- Good -->
+<img alt="George Bligh demonstrating a deadlift technique for an online coaching client" />
+
+<!-- Bad -->
+<img alt="personal trainer UK online coaching fitness" />
+```
+
+Alt text serves two purposes: screen reader accessibility, and a secondary SEO signal. Both reward plain-English descriptions over keyword stuffing.
+
+---
 
 No build step required. Open `index.html` directly in a browser, or use a simple local server to avoid font/asset path issues:
 
@@ -175,14 +253,8 @@ Everything below must be resolved before the site goes live. Items are grouped b
 ### 🟡 Important — affects SEO, trust, and professionalism
 
 #### SEO
-- [ ] **Page title** — update `<title>` in `index.html`. Suggested: `George Bligh Online Coaching | Personal Trainer Portsmouth`
-- [ ] **Meta description** — update `<meta name="description">`. Should be 140–160 characters, include key terms (online coaching, personal trainer, Portsmouth).
-- [ ] **Canonical URL** — update `<link rel="canonical" href="...">` once domain is confirmed.
-- [ ] **Open Graph tags** — update `og:title`, `og:description`, `og:url` and provide a proper `og:image` (recommended: `1200 × 630px` — this is what appears when the link is shared on social media).
-- [ ] **Structured data (optional but recommended)** — add a `LocalBusiness` or `Person` JSON-LD block in the `<head>`. Helps Google understand the business.
-- [ ] **Alt text on all images** — once real photos are added, ensure every `<img>` tag has a descriptive `alt` attribute.
-- [ ] **Sitemap** — add a `sitemap.xml` once domain is live. Can be generated at [xml-sitemaps.com](https://www.xml-sitemaps.com).
-- [ ] **Google Search Console** — verify ownership once domain is live and submit sitemap.
+- [ ] Complete all items in the **SEO** section of this README (see below)
+- [ ] All images have descriptive `alt` text (see Images and Assets section)
 
 #### Favicon & Brand
 - [ ] **Favicon** — currently commented out. Once a logo is created, export:
@@ -226,7 +298,199 @@ Everything below must be resolved before the site goes live. Items are grouped b
 
 ---
 
-## Design Tokens (quick reference)
+## SEO
+
+The goal is for George to rank nationally across the UK for online personal training and coaching searches — not just locally. Portsmouth appears in the About section copy to add authenticity to his story, but the primary keyword focus is online and UK-wide. Local terms ("Portsmouth personal trainer") are secondary and should not dominate.
+
+---
+
+### Keyword strategy
+
+Target keywords fall into three tiers:
+
+**Primary — highest intent, national:**
+- online personal trainer UK
+- online personal training UK
+- online fitness coach UK
+- online weight loss coach UK
+- online strength and conditioning coach
+- 1-to-1 online personal trainer
+
+**Secondary — problem/goal-led (high conversion):**
+- personal trainer for busy professionals
+- online personal trainer for weight loss
+- online personal trainer for muscle building
+- online personal trainer over 40
+- personalised online training programme
+- online nutrition and fitness coaching
+
+**Tertiary — trust and credibility:**
+- Level 3 personal trainer online
+- affordable online personal trainer UK
+- online PT with weekly check-ins
+
+Portsmouth terms are fine as incidental mentions in body copy and structured data, but should not appear in the page title or meta description.
+
+---
+
+### On-page SEO — what to implement
+
+#### Page title
+
+```html
+<title>George Bligh | Online Personal Trainer UK</title>
+```
+
+Keep it under 60 characters. Lead with the brand name, follow with the primary keyword. No need to mention Portsmouth here.
+
+#### Meta description
+
+```html
+<meta name="description" content="Online personal training and nutrition coaching built around your lifestyle. 1-to-1 programmes, weekly check-ins, and real results — wherever you are in the UK." />
+```
+
+140–160 characters. Focus on the value proposition and the national reach. Include a natural call to action or benefit statement.
+
+#### Heading hierarchy
+
+The `<h1>` on the page ("Train Smart. Live Better.") is strong as a brand statement but weak as a search signal. Once real content is in place, consider whether a subtitle or supporting line closer to the fold can include a primary keyword naturally — e.g. a subheading in the services section: "Online Personal Training Built Around Your Life".
+
+The heading structure across the page should follow a logical `h1 → h2 → h3` hierarchy with no skipped levels. Do not use heading tags purely for visual size.
+
+#### Canonical URL
+
+```html
+<link rel="canonical" href="https://yourdomain.com/" />
+```
+
+Update once the domain is confirmed. Use the `www` or non-`www` version consistently — whichever Cloudflare is configured to serve — and stick to it.
+
+#### Open Graph tags
+
+Used by social platforms when the link is shared. Update all four:
+
+```html
+<meta property="og:title"       content="George Bligh | Online Personal Trainer UK" />
+<meta property="og:description" content="1-to-1 online personal training and nutrition coaching. Real programmes built around your life, wherever you are in the UK." />
+<meta property="og:url"         content="https://yourdomain.com/" />
+<meta property="og:image"       content="https://yourdomain.com/assets/images/og-image.jpg" />
+```
+
+The `og:image` should be a 1200 × 630px JPEG — typically a strong photo of George with the brand name overlaid, or a clean branded graphic. This is what appears in link previews on Instagram, Facebook, WhatsApp, iMessage etc.
+
+#### Structured data (JSON-LD)
+
+Add the following block inside a `<script type="application/ld+json">` tag in the `<head>`. This tells Google exactly what type of business this is, what services are offered, and how to reach George. It directly feeds the Knowledge Panel and rich results.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "George Bligh",
+  "jobTitle": "Online Personal Trainer",
+  "description": "Online personal trainer and nutrition coach offering 1-to-1 coaching, personalised training programmes, and weekly check-ins to clients across the UK.",
+  "url": "https://yourdomain.com",
+  "image": "https://yourdomain.com/assets/images/about-main.webp",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Portsmouth",
+    "addressCountry": "GB"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "United Kingdom"
+  },
+  "sameAs": [
+    "https://www.instagram.com/GEORGESHANDLE",
+    "https://www.tiktok.com/@GEORGESHANDLE",
+    "https://www.facebook.com/GEORGESHANDLE",
+    "https://www.linkedin.com/in/GEORGESHANDLE"
+  ],
+  "knowsAbout": [
+    "Personal Training",
+    "Online Coaching",
+    "Nutrition Guidance",
+    "Strength Training",
+    "Weight Loss",
+    "Muscle Building"
+  ]
+}
+```
+
+Replace all `GEORGESHANDLE` placeholders and the domain URL before deploying. The `address` with Portsmouth satisfies Google's desire to understand where George is based, while `areaServed: United Kingdom` signals that he works nationally.
+
+---
+
+### Technical SEO
+
+#### Sitemap
+
+Create a `sitemap.xml` in the repo root once the domain is confirmed. For a single-page site it is minimal:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://yourdomain.com/</loc>
+    <lastmod>2025-01-01</lastmod>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+```
+
+Update `<lastmod>` whenever significant content changes. Add new `<url>` entries as new pages are added.
+
+Then reference it in `index.html`:
+
+```html
+<!-- In <head> -->
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+```
+
+#### robots.txt
+
+Add a `robots.txt` in the repo root:
+
+```
+User-agent: *
+Allow: /
+Sitemap: https://yourdomain.com/sitemap.xml
+```
+
+This is fine for a site with no private pages. No crawling restrictions needed.
+
+#### Google Search Console
+
+1. Go to [search.google.com/search-console](https://search.google.com/search-console)
+2. Add property using the domain option (requires Cloudflare DNS access to add a TXT record)
+3. Once verified, submit the sitemap URL
+4. Monitor for crawl errors, indexing status, and which queries are driving impressions
+
+Do this on launch day — it can take a few days for Google to crawl and index, and Search Console gives visibility into that process.
+
+#### Page speed
+
+Core Web Vitals (LCP, CLS, FID) are a confirmed Google ranking factor. The current build is lean enough to score well out of the box, but the main risk is unoptimised images. Once real photos are in place, run the site through [PageSpeed Insights](https://pagespeed.web.dev) and target a score above 90 on mobile. The most common fixes are:
+
+- Image compression (see Images and Assets section)
+- Adding `width` and `height` attributes to all `<img>` tags (prevents layout shift)
+- Preloading the hero image (see checklist)
+
+Cloudflare's proxy handles caching and minification automatically once enabled, which takes care of most other performance recommendations.
+
+---
+
+### Off-page SEO (George's part)
+
+Technical SEO is only part of the picture. These are the things George can do himself to build authority over time:
+
+- **Google Business Profile** — create a free listing at [business.google.com](https://business.google.com). Even as an online-only business, a verified profile helps with branded searches and adds credibility. List the service area as United Kingdom.
+- **Social profiles** — ensure Instagram, TikTok, Facebook, and LinkedIn bios all link back to the website. These are treated as trust signals.
+- **Content on social** — TikTok and Instagram content that drives traffic to the site is one of the fastest ways to build domain authority for a new site. Short-form video demonstrating expertise performs well in the PT space.
+- **Client testimonials with names** — named, attributed testimonials on the site carry more SEO and trust weight than anonymous quotes. Worth encouraging clients to also leave a Google review on the Business Profile.
+- **Backlinks** — any time the business is mentioned on another site (a gym's website, a local directory, a press mention), ask for a link back to the site. Even a handful of relevant backlinks significantly accelerates ranking for a new domain.
+
+---
 
 | Token | Value | Usage |
 |---|---|---|
