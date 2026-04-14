@@ -88,7 +88,7 @@
       --accent-glow:  rgba(212,130,58,0.12);
       --text-primary:   #F0EBE3;
       --text-secondary: #A89E92;
-      --text-muted:     #6B6059;
+      --text-muted:     #9E9288;
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body:    'DM Sans', sans-serif;
       --max-width: 1180px;
@@ -945,7 +945,7 @@
 
     .footer__copy {
       font-size: 0.75rem;
-      color: #8A7E74; /* lightened from --text-muted for WCAG AA contrast on --bg-card */
+      color: var(--text-muted);
     }
 
     .footer__socials {
@@ -958,7 +958,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #8A7E74; /* lightened from --text-muted for WCAG AA contrast on --bg-card */
+      color: var(--text-muted);
       transition: color 0.25s;
     }
     .footer__social-link:hover { color: var(--accent); }
