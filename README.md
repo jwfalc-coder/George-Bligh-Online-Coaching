@@ -235,11 +235,11 @@ Everything below must be resolved before the site goes live. Items are grouped b
 - [ ] **About photo (secondary)** — optional overlapping accent image. Recommended: `500 × 500px`. Can be removed entirely if not needed.
 - [ ] **Gallery photos** — minimum 6 images. At desktop, grid uses varied aspect ratios (see placeholders for sizes). At tablet/mobile, all images display as 1:1 squares — ensure subjects are centred so square cropping works.
 - [ ] **Testimonial** — replace placeholder quote, client name, and result summary. Add client photo (48 × 48px, circular) or remove the photo slot if client prefers no image.
-- [ ] **Contact details** — replace all `XXXX` placeholders in the contact section and footer:
-  - Phone number (`tel:` link)
-  - Email address (`mailto:` link)
-  - WhatsApp number (`https://wa.me/44...` link — include country code, no spaces or `+`)
-- [ ] **Social media URLs** — replace all `href="#"` on social links (Instagram, TikTok, Facebook, LinkedIn) in both the hero and footer.
+- [ ] **Contact details** — replace all placeholders in the contact section and footer:
+  - Phone: ✅ `+44 7711 773900` — done
+  - WhatsApp: ✅ `https://wa.me/447711773900` — done
+  - Email: ⏳ `info@georgeblighcoaching.com` — in the HTML, pending domain and email setup
+- [ ] **Social media URLs** — ✅ All four links (Instagram, TikTok, Facebook, LinkedIn) updated in both hero and footer
 
 #### Contact Form
 - [ ] **Wire up the form** — the form currently simulates a send with a timeout. It does not actually send anything. Choose one of:
@@ -401,10 +401,10 @@ Add the following block inside a `<script type="application/ld+json">` tag in th
     "name": "United Kingdom"
   },
   "sameAs": [
-    "https://www.instagram.com/GEORGESHANDLE",
-    "https://www.tiktok.com/@GEORGESHANDLE",
-    "https://www.facebook.com/GEORGESHANDLE",
-    "https://www.linkedin.com/in/GEORGESHANDLE"
+    "https://www.instagram.com/georgefitzness/",
+    "https://www.tiktok.com/@georgefitnezz",
+    "https://www.facebook.com/profile.php?id=61587950019337",
+    "https://www.linkedin.com/in/george-bligh/"
   ],
   "knowsAbout": [
     "Personal Training",
