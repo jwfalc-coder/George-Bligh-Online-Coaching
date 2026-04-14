@@ -234,7 +234,7 @@ Everything below must be resolved before the site goes live. Items are grouped b
 - [ ] **About photo (main)** — replace placeholder. Recommended: `700 × 900px`.
 - [ ] **About photo (secondary)** — optional overlapping accent image. Recommended: `500 × 500px`. Can be removed entirely if not needed.
 - [ ] **Gallery photos** — minimum 6 images. At desktop, grid uses varied aspect ratios (see placeholders for sizes). At tablet/mobile, all images display as 1:1 squares — ensure subjects are centred so square cropping works.
-- [ ] **Testimonial** — replace placeholder quote, client name, and result summary. Add client photo (48 × 48px, circular) or remove the photo slot if client prefers no image.
+- [x] **Testimonial** — Harry's quote live. Author photo placeholder remains (48 × 48px) — add when available, or remove slot if not needed.
 - [ ] **Contact details** — replace all placeholders in the contact section and footer:
   - Phone: ✅ `+44 7711 773900` — done
   - WhatsApp: ✅ `https://wa.me/447711773900` — done
