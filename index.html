@@ -64,10 +64,16 @@
   }
   </script>
 
-  <!-- ── Fonts ─────────────────────────────────────────────── -->
+  <!-- ── Fonts (non-blocking) ──────────────────────────────── -->
+  <!-- preconnect hints stay — they prime the connection early -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <!-- Load font CSS asynchronously so it never blocks first paint -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
+  </noscript>
 
   <style>
     /* ── Variables & Reset ─────────────────────────────── */
@@ -939,7 +945,7 @@
 
     .footer__copy {
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: #8A7E74; /* lightened from --text-muted for WCAG AA contrast on --bg-card */
     }
 
     .footer__socials {
@@ -952,7 +958,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #8A7E74; /* lightened from --text-muted for WCAG AA contrast on --bg-card */
       transition: color 0.25s;
     }
     .footer__social-link:hover { color: var(--accent); }
@@ -1148,6 +1154,9 @@
       </div>
     </div>
   </nav>
+
+  <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+  <main>
 
   <!-- ── HERO ────────────────────────────────────────────── -->
   <section id="home" class="hero">
@@ -1507,6 +1516,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ── FOOTER ────────────────────────────────────────────── -->
   <footer class="footer">
