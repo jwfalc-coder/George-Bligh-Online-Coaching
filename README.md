@@ -68,6 +68,81 @@ npx serve .
 
 ---
 
+## Email Setup (info@ address)
+
+GitHub Pages only serves static files — there is no mail server involved. Cloudflare handles DNS but does not host email by default. The `info@yourdomain.com` address needs to be configured separately. Three options are listed below, from simplest to most fully-featured.
+
+---
+
+### Option 1 — Cloudflare Email Routing (recommended, free)
+
+Cloudflare's built-in email routing forwards any mail sent to `info@yourdomain.com` straight to an existing inbox (e.g. George's personal Gmail). No separate email provider, no new apps, no monthly cost.
+
+**Limitation:** receive only. George cannot *send* from `info@` unless he configures a Gmail "Send mail as" alias (see below).
+
+**Setup steps:**
+
+1. In the Cloudflare dashboard, go to **Email → Email Routing**
+2. Click **Get started** and follow the wizard
+3. Cloudflare will automatically add the required `MX` and `TXT` DNS records
+4. Under **Routing rules**, add a custom address: `info@yourdomain.com` → forward to George's personal email
+5. Verify the destination address when prompted (Cloudflare sends a confirmation link)
+6. Done — emails to `info@` will arrive in George's existing inbox within minutes
+
+**Optional — send from `info@` via Gmail:**
+
+1. In Gmail, go to **Settings → Accounts → Send mail as → Add another email address**
+2. Enter `info@yourdomain.com`, untick "Treat as alias"
+3. Use `smtp.gmail.com` as the SMTP server with George's Gmail credentials
+4. Gmail will send a verification code to `info@` — it will arrive via the forwarding rule above
+5. Once verified, George can choose `info@yourdomain.com` as the From address when composing
+
+---
+
+### Option 2 — Google Workspace (~£5–6/month)
+
+A full `info@yourdomain.com` mailbox George can send and receive from, using the standard Gmail interface. Most professional option if email is a primary client communication channel.
+
+**Setup steps:**
+
+1. Sign up at [workspace.google.com](https://workspace.google.com) and select the Starter plan
+2. Enter the domain when prompted — Google will provide DNS records to add in Cloudflare
+3. In Cloudflare DNS, add the `MX` records Google provides (delete any existing MX records first)
+4. Add the `TXT` verification record to confirm domain ownership
+5. Complete setup in the Google Workspace Admin console
+6. `info@yourdomain.com` is live — access via Gmail or any mail client
+
+---
+
+### Option 3 — Zoho Mail (free for single domain)
+
+Full send/receive custom email with no monthly cost. Slightly more setup than Cloudflare routing but a reasonable middle ground.
+
+**Setup steps:**
+
+1. Sign up at [zoho.com/mail](https://www.zoho.com/mail/) and choose the Free plan
+2. Add the domain and follow Zoho's DNS verification steps
+3. In Cloudflare DNS, add the `MX`, `SPF`, and `DKIM` records Zoho provides
+4. Create the `info@` mailbox in the Zoho admin panel
+5. Access mail via [mail.zoho.eu](https://mail.zoho.eu) or configure a mail client
+
+---
+
+### Which to choose
+
+| | Cloudflare Routing | Google Workspace | Zoho Mail |
+|---|---|---|---|
+| Cost | Free | ~£5–6/month | Free |
+| Send from `info@` | Via Gmail alias | Yes, natively | Yes, natively |
+| Setup complexity | Very simple | Simple | Moderate |
+| Best for | Forwarding only, keeping things lean | Professional daily use | Full mailbox without cost |
+
+**Recommendation:** start with Cloudflare Email Routing. It takes under five minutes, costs nothing, and means all contact form submissions and direct emails land in George's existing inbox. Upgrade to Google Workspace if he needs to actively send from `info@` at scale.
+
+> **Note:** whichever option is chosen, the contact form on the site routes through a separate service (Formspree etc.) and is not affected by the email setup. They are independent.
+
+---
+
 ## Pre-Launch Checklist
 
 Everything below must be resolved before the site goes live. Items are grouped by priority.
