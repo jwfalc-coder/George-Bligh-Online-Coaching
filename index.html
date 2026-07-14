@@ -1176,6 +1176,29 @@
       .footer { padding: 2.5rem 0 6rem; }
     }
 
+    /* Gallery dots — mobile carousel indicator */
+    .gallery__dots { display: none; }
+    @media (max-width: 560px) {
+      .gallery__dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .gallery__dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: var(--border);
+        border: none; padding: 0;
+        cursor: pointer;
+        transition: background 0.25s, transform 0.25s;
+      }
+      .gallery__dot--active {
+        background: var(--accent);
+        transform: scale(1.35);
+      }
+    }
+
     /* Very small */
     @media (max-width: 380px) {
       .gallery__item, .gallery__item--tall { flex: 0 0 85vw; }
@@ -1480,6 +1503,13 @@
                width="1080" height="1947" loading="lazy" />
         </div>
       </div>
+      <div class="gallery__dots" aria-hidden="true">
+        <button class="gallery__dot gallery__dot--active" data-index="0"></button>
+        <button class="gallery__dot" data-index="1"></button>
+        <button class="gallery__dot" data-index="2"></button>
+        <button class="gallery__dot" data-index="3"></button>
+        <button class="gallery__dot" data-index="4"></button>
+      </div>
     </div>
   </section>
 
@@ -1652,6 +1682,60 @@
         }
       });
     }
+    // Gallery carousel — dots + autoplay (mobile only)
+    (function () {
+      const grid = document.querySelector('.gallery__grid');
+      const dots = Array.from(document.querySelectorAll('.gallery__dot'));
+      if (!grid || !dots.length) return;
+
+      const items = () => Array.from(grid.querySelectorAll('.gallery__item, .gallery__item--tall'));
+      let active = 0;
+      let timer = null;
+
+      function setActive(i) {
+        active = i;
+        dots.forEach((d, j) => d.classList.toggle('gallery__dot--active', j === i));
+      }
+
+      function goTo(i) {
+        const el = items()[i];
+        if (!el) return;
+        grid.scrollTo({ left: el.offsetLeft, behavior: 'smooth' });
+        setActive(i);
+      }
+
+      function next() { goTo((active + 1) % items().length); }
+
+      function start() {
+        stop();
+        timer = setInterval(next, 2000);
+      }
+
+      function stop() { clearInterval(timer); timer = null; }
+
+      // Sync dots on scroll
+      grid.addEventListener('scroll', function () {
+        const sl = grid.scrollLeft;
+        let closest = 0, minD = Infinity;
+        items().forEach(function (el, i) {
+          const d = Math.abs(el.offsetLeft - sl);
+          if (d < minD) { minD = d; closest = i; }
+        });
+        setActive(closest);
+      }, { passive: true });
+
+      // Dot clicks
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); start(); });
+      });
+
+      // Pause on touch, resume 3 s after lift
+      grid.addEventListener('touchstart', stop, { passive: true });
+      grid.addEventListener('touchend', function () { setTimeout(start, 3000); }, { passive: true });
+
+      // Only run autoplay on mobile
+      if (window.matchMedia('(max-width: 560px)').matches) start();
+    }());
   </script>
 
 </body>
