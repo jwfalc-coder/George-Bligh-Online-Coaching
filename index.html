@@ -289,6 +289,7 @@
     /* ── Real image treatments ────────────────────────── */
     .hero__image-wrap > img {
       flex: 1;
+      min-height: 0;
       object-fit: cover;
       object-position: center top;
     }
@@ -1437,7 +1438,8 @@
         <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="2">
           <img src="assets/images/Gallery%203%201074%20x%201938.webp"
                alt="George Bligh fitness coaching"
-               width="1074" height="1938" loading="lazy" />
+               width="1074" height="1938" loading="lazy"
+               style="object-position: top;" />
         </div>
         <!-- cols2-3, row2 (wide) -->
         <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="1">
