@@ -1,15 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 56" role="img" aria-label="George Bligh Online Coaching">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 38" overflow="visible" role="img" aria-label="George Bligh Online Coaching">
   <title>George Bligh Online Coaching</title>
-  <!-- Amber vertical rule — matches the section-label motif used site-wide -->
-  <rect x="0" y="0" width="3" height="56" fill="#D4823A"/>
-  <!-- Primary name -->
-  <text x="16" y="37"
+  <!-- Mirrors the .nav__logo treatment exactly:
+       Barlow Condensed 800, uppercase, line-height 1.15
+       Name: 1.1rem #F0EBE3, letter-spacing 0.04em
+       Sub:  0.78rem #D4823A, letter-spacing 0.1em -->
+  <text x="0" y="20"
     font-family="'Barlow Condensed', 'Arial Narrow', Impact, sans-serif"
-    font-size="34" font-weight="800" fill="#F0EBE3"
-    letter-spacing="0.5">GEORGE BLIGH</text>
-  <!-- Sub mark -->
-  <text x="17" y="52"
+    font-size="18" font-weight="800"
+    letter-spacing="0.72"
+    fill="#F0EBE3">GEORGE BLIGH</text>
+  <text x="0" y="35"
     font-family="'Barlow Condensed', 'Arial Narrow', Impact, sans-serif"
-    font-size="11" font-weight="600" fill="#D4823A"
-    letter-spacing="4">ONLINE COACHING</text>
+    font-size="12.8" font-weight="800"
+    letter-spacing="1.28"
+    fill="#D4823A">ONLINE COACHING</text>
 </svg>
