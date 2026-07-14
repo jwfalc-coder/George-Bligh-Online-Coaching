@@ -287,9 +287,16 @@
     }
 
     /* ── Real image treatments ────────────────────────── */
-    .hero__image-wrap > img {
+    .hero__image-ph {
       flex: 1;
-      min-height: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero__image-ph img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: center top;
     }
@@ -829,8 +836,8 @@
 
     .gallery__grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 280px 280px;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 380px 380px;
       gap: 1rem;
     }
 
@@ -1220,10 +1227,12 @@
       </div>
 
       <div class="hero__image-wrap" style="animation:fadeIn 1s 0.2s both;">
-        <img src="assets/images/Hero%201080w%20x%202021h%20px.webp"
-             alt="George Bligh, online personal trainer"
-             width="1080" height="2021"
-             fetchpriority="high" />
+        <div class="hero__image-ph">
+          <img src="assets/images/Hero%201080w%20x%202021h%20px.webp"
+               alt="George Bligh, online personal trainer"
+               width="1080" height="2021"
+               fetchpriority="high" />
+        </div>
         <div class="hero__image-badge">
           <div class="hero__badge-stat">5+</div>
           <div class="hero__badge-label">Years Coaching</div>
@@ -1434,15 +1443,14 @@
                alt="George Bligh online coaching"
                width="1080" height="2340" loading="lazy" />
         </div>
-        <!-- cols3-4, row1 (wide) -->
-        <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="2">
+        <!-- col3, row1 -->
+        <div class="gallery__item" data-reveal data-reveal-delay="2">
           <img src="assets/images/Gallery%203%201074%20x%201938.webp"
                alt="George Bligh fitness coaching"
-               width="1074" height="1938" loading="lazy"
-               style="object-position: top;" />
+               width="1074" height="1938" loading="lazy" />
         </div>
-        <!-- cols2-3, row2 (wide) -->
-        <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="1">
+        <!-- col2, row2 -->
+        <div class="gallery__item" data-reveal data-reveal-delay="1">
           <img src="assets/images/Gallery%204%201080%20x%201918.webp"
                alt="George Bligh personal training"
                width="1080" height="1918" loading="lazy" />
