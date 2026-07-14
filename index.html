@@ -1084,6 +1084,7 @@
       .hero__sub { max-width: 100%; }
       .hero__image-wrap { min-height: 420px; width: 100%; position: relative; }
       .hero__image-ph { min-height: 420px; }
+      .hero__image-ph img { object-position: center bottom; }
       .hero__image-badge { left: var(--gutter); bottom: 1.5rem; }
 
       /* About */
@@ -1137,14 +1138,35 @@
       .services__grid { grid-template-columns: 1fr; }
       .stats-strip { padding: 2rem 0; }
 
-      /* About: drop secondary image entirely on small screens */
-      .about__img-secondary { display: none; }
-      .about__image-stack   { padding-bottom: 0; }
+      /* About: keep secondary image but inset it so it doesn't overflow */
+      .about__img-secondary {
+        display: block;
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        width: 40%;
+      }
 
-      /* Gallery: 2-col square */
+      /* Gallery: horizontal swipe carousel */
       .gallery__grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.4rem;
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0.75rem;
+        grid-template-columns: unset;
+        grid-template-rows: unset;
+      }
+      .gallery__grid::-webkit-scrollbar { display: none; }
+      .gallery__item,
+      .gallery__item--tall {
+        flex: 0 0 72vw;
+        scroll-snap-align: start;
+        aspect-ratio: 3 / 4;
+        grid-column: unset;
+        grid-row: unset;
       }
 
       /* Contact */
@@ -1156,7 +1178,7 @@
 
     /* Very small */
     @media (max-width: 380px) {
-      .gallery__grid { grid-template-columns: 1fr; }
+      .gallery__item, .gallery__item--tall { flex: 0 0 85vw; }
       .hero__social { display: none; }
     }
   </style>
