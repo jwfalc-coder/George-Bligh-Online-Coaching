@@ -75,6 +75,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Load font CSS asynchronously so it never blocks first paint -->
+  <link rel="preload" as="image" href="assets/images/Hero%201080w%20x%202021h%20px.webp" />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
   <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
   <noscript>
@@ -283,6 +284,25 @@
       height: 1px;
       background: var(--accent);
       flex-shrink: 0;
+    }
+
+    /* ── Real image treatments ────────────────────────── */
+    .hero__image-wrap > img {
+      flex: 1;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .about__img-main,
+    .about__img-secondary {
+      object-fit: cover;
+      object-position: center top;
+    }
+    .gallery__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     /* ── Image placeholders ────────────────────────────── */
@@ -1197,13 +1217,10 @@
       </div>
 
       <div class="hero__image-wrap" style="animation:fadeIn 1s 0.2s both;">
-        <div class="img-ph hero__image-ph">
-          <div class="img-ph__inner">
-            <div class="img-ph__icon">📸</div>
-            <div class="img-ph__label">Hero Photo</div>
-            <div class="img-ph__dim">Recommended: 900 × 1080px</div>
-          </div>
-        </div>
+        <img src="assets/images/Hero%201080w%20x%202021h%20px.webp"
+             alt="George Bligh, online personal trainer"
+             width="1080" height="2021"
+             fetchpriority="high" />
         <div class="hero__image-badge">
           <div class="hero__badge-stat">5+</div>
           <div class="hero__badge-label">Years Coaching</div>
@@ -1241,20 +1258,16 @@
     <div class="container">
       <div class="about__grid">
         <div class="about__image-stack" data-reveal>
-          <div class="img-ph about__img-main">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">About Photo (Main)</div>
-              <div class="img-ph__dim">Recommended: 700 × 900px</div>
-            </div>
-          </div>
-          <div class="img-ph about__img-secondary">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Secondary</div>
-              <div class="img-ph__dim">500 × 500px</div>
-            </div>
-          </div>
+          <img src="assets/images/About%20Main%201077w%20x%201915h%20px.webp"
+               alt="George Bligh, online personal trainer based in Portsmouth"
+               class="about__img-main"
+               width="1077" height="1915"
+               loading="lazy" />
+          <img src="assets/images/About%20Secondary%201282x1282.webp"
+               alt="George Bligh coaching"
+               class="about__img-secondary"
+               width="1282" height="1282"
+               loading="lazy" />
         </div>
 
         <div>
@@ -1404,59 +1417,35 @@
       <h2 class="gallery__title" data-reveal data-reveal-delay="1">In Action.</h2>
 
       <div class="gallery__grid">
+        <!-- col1, rows 1-2 (tall) -->
         <div class="gallery__item gallery__item--tall" data-reveal>
-          <div class="img-ph" style="height:100%">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Portrait Photo</div>
-              <div class="img-ph__dim">600 × 1160px</div>
-            </div>
-          </div>
+          <img src="assets/images/Gallery%201%201080w%20x%201814h%20px.webp"
+               alt="George Bligh training session"
+               width="1080" height="1814" loading="lazy" />
         </div>
-        <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="1">
-          <div class="img-ph" style="height:100%">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Wide Action Shot</div>
-              <div class="img-ph__dim">1160 × 560px</div>
-            </div>
-          </div>
-        </div>
-        <div class="gallery__item" data-reveal data-reveal-delay="2">
-          <div class="img-ph" style="height:100%">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Photo</div>
-              <div class="img-ph__dim">580 × 560px</div>
-            </div>
-          </div>
-        </div>
+        <!-- col2, row1 -->
         <div class="gallery__item" data-reveal data-reveal-delay="1">
-          <div class="img-ph" style="height:100%">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Photo</div>
-              <div class="img-ph__dim">580 × 280px</div>
-            </div>
-          </div>
+          <img src="assets/images/Gallery%202%201080%20x%202340.webp"
+               alt="George Bligh online coaching"
+               width="1080" height="2340" loading="lazy" />
         </div>
+        <!-- cols3-4, row1 (wide) -->
+        <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="2">
+          <img src="assets/images/Gallery%203%201074%20x%201938.webp"
+               alt="George Bligh fitness coaching"
+               width="1074" height="1938" loading="lazy" />
+        </div>
+        <!-- cols2-3, row2 (wide) -->
+        <div class="gallery__item gallery__item--wide" data-reveal data-reveal-delay="1">
+          <img src="assets/images/Gallery%204%201080%20x%201918.webp"
+               alt="George Bligh personal training"
+               width="1080" height="1918" loading="lazy" />
+        </div>
+        <!-- col4, row2 -->
         <div class="gallery__item" data-reveal data-reveal-delay="2">
-          <div class="img-ph" style="height:100%">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Photo</div>
-              <div class="img-ph__dim">580 × 280px</div>
-            </div>
-          </div>
-        </div>
-        <div class="gallery__item" data-reveal data-reveal-delay="3">
-          <div class="img-ph" style="height:100%">
-            <div class="img-ph__inner">
-              <div class="img-ph__icon">📸</div>
-              <div class="img-ph__label">Photo</div>
-              <div class="img-ph__dim">580 × 280px</div>
-            </div>
-          </div>
+          <img src="assets/images/Gallery%205%201080%20x%201947.webp"
+               alt="George Bligh strength training"
+               width="1080" height="1947" loading="lazy" />
         </div>
       </div>
     </div>
