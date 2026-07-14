@@ -15,11 +15,11 @@
   <meta property="og:url"         content="https://georgeblighcoaching.co.uk/" />
   <meta property="og:title"       content="George Bligh | Online Personal Trainer UK" />
   <meta property="og:description" content="1-to-1 online personal training and nutrition coaching built around your lifestyle. Real programmes, real results — anywhere in the UK." />
-  <meta property="og:image"       content="https://georgeblighcoaching.co.uk/assets/images/og-image.jpg" />
+  <meta property="og:image"       content="https://georgeblighcoaching.co.uk/assets/images/Social%20meta%20Image.webp" />
   <meta name="twitter:card"       content="summary_large_image" />
   <meta name="twitter:title"      content="George Bligh | Online Personal Trainer UK" />
   <meta name="twitter:description" content="1-to-1 online personal training and nutrition coaching built around your lifestyle. Real programmes, real results — anywhere in the UK." />
-  <meta name="twitter:image"      content="https://georgeblighcoaching.co.uk/assets/images/og-image.jpg" />
+  <meta name="twitter:image"      content="https://georgeblighcoaching.co.uk/assets/images/Social%20meta%20Image.webp" />
 
   <!-- ── Sitemap ──────────────────────────────────────────── -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -292,16 +292,18 @@
       object-fit: cover;
       object-position: center top;
     }
-    .about__img-main,
-    .about__img-secondary {
+    .about__img-main img,
+    .about__img-secondary img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center;
     }
     .gallery__item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center;
       display: block;
     }
 
@@ -1258,16 +1260,18 @@
     <div class="container">
       <div class="about__grid">
         <div class="about__image-stack" data-reveal>
-          <img src="assets/images/About%20Main%201077w%20x%201915h%20px.webp"
-               alt="George Bligh, online personal trainer based in Portsmouth"
-               class="about__img-main"
-               width="1077" height="1915"
-               loading="lazy" />
-          <img src="assets/images/About%20Secondary%201282x1282.webp"
-               alt="George Bligh coaching"
-               class="about__img-secondary"
-               width="1282" height="1282"
-               loading="lazy" />
+          <div class="about__img-main">
+            <img src="assets/images/About%20Main%201077w%20x%201915h%20px.webp"
+                 alt="George Bligh, online personal trainer based in Portsmouth"
+                 width="1077" height="1915"
+                 loading="lazy" />
+          </div>
+          <div class="about__img-secondary">
+            <img src="assets/images/About%20Secondary%201282x1282.webp"
+                 alt="George Bligh coaching"
+                 width="1282" height="1282"
+                 loading="lazy" />
+          </div>
         </div>
 
         <div>
