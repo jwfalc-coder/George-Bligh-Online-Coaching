@@ -8,23 +8,29 @@
   <title>George Bligh | Online Personal Trainer UK</title>
   <meta name="description" content="1-to-1 online personal training and nutrition coaching built around your lifestyle. Personalised programmes, weekly check-ins, and real results — wherever you are in the UK." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://georgeblighcoaching.com/" />
+  <link rel="canonical" href="https://georgeblighcoaching.co.uk/" />
 
   <!-- ── Open Graph ────────────────────────────────────────── -->
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://georgeblighcoaching.com/" />
+  <meta property="og:url"         content="https://georgeblighcoaching.co.uk/" />
   <meta property="og:title"       content="George Bligh | Online Personal Trainer UK" />
   <meta property="og:description" content="1-to-1 online personal training and nutrition coaching built around your lifestyle. Real programmes, real results — anywhere in the UK." />
-  <meta property="og:image"       content="https://georgeblighcoaching.com/assets/images/og-image.jpg" />
+  <meta property="og:image"       content="https://georgeblighcoaching.co.uk/assets/images/og-image.jpg" />
   <meta name="twitter:card"       content="summary_large_image" />
   <meta name="twitter:title"      content="George Bligh | Online Personal Trainer UK" />
   <meta name="twitter:description" content="1-to-1 online personal training and nutrition coaching built around your lifestyle. Real programmes, real results — anywhere in the UK." />
-  <meta name="twitter:image"      content="https://georgeblighcoaching.com/assets/images/og-image.jpg" />
+  <meta name="twitter:image"      content="https://georgeblighcoaching.co.uk/assets/images/og-image.jpg" />
 
-  <!-- ── Favicon (uncomment once assets are ready) ─────────── -->
-  <!-- <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png" /> -->
-  <!-- <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16.png" /> -->
-  <!-- <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" /> -->
+  <!-- ── Sitemap ──────────────────────────────────────────── -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- ── Favicon ──────────────────────────────────────────── -->
+  <!-- SVG favicon works in all modern browsers immediately -->
+  <link rel="icon" type="image/svg+xml" href="/assets/favicons/monogram.svg" />
+  <!-- PNG fallbacks — export from assets/favicons/monogram.svg via squoosh.app or similar -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/assets/favicons/apple-touch-icon.png" />
 
   <!-- ── Structured Data ───────────────────────────────────── -->
   <script type="application/ld+json">
@@ -34,8 +40,8 @@
     "name": "George Bligh",
     "jobTitle": "Online Personal Trainer",
     "description": "Online personal trainer and nutrition coach offering 1-to-1 coaching, personalised training programmes, weekly check-ins, and nutrition guidance to clients across the UK.",
-    "url": "https://georgeblighcoaching.com",
-    "image": "https://georgeblighcoaching.com/assets/images/about-main.webp",
+    "url": "https://georgeblighcoaching.co.uk",
+    "image": "https://georgeblighcoaching.co.uk/assets/images/about-main.webp",
     "telephone": "+447711773900",
     "address": {
       "@type": "PostalAddress",
@@ -1478,11 +1484,11 @@
                 +44 7711 773900
               </div>
             </a>
-            <a href="mailto:info@georgeblighcoaching.com" class="contact__method">
+            <a href="mailto:info@georgeblighcoaching.co.uk" class="contact__method">
               <span class="contact__method-icon">✉️</span>
               <div class="contact__method-text">
                 <span class="contact__method-label">Email</span>
-                info@georgeblighcoaching.com
+                info@georgeblighcoaching.co.uk
               </div>
             </a>
             <a href="https://wa.me/447711773900" target="_blank" rel="noopener noreferrer" class="contact__method">
@@ -1496,28 +1502,31 @@
         </div>
 
         <div data-reveal data-reveal-delay="2">
-          <form class="contact-form">
+          <!-- Replace YOUR_FORMSPREE_ID with your actual Formspree form ID -->
+          <form class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+            <input type="hidden" name="_subject" value="New coaching enquiry — georgeblighcoaching.co.uk">
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
             <div class="form-row">
               <div class="form-field">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-input" placeholder="Your first name" />
+                <label class="form-label" for="first_name">First Name</label>
+                <input type="text" class="form-input" id="first_name" name="first_name" placeholder="Your first name" autocomplete="given-name" required />
               </div>
               <div class="form-field">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-input" placeholder="Your last name" />
+                <label class="form-label" for="last_name">Last Name</label>
+                <input type="text" class="form-input" id="last_name" name="last_name" placeholder="Your last name" autocomplete="family-name" />
               </div>
             </div>
             <div class="form-field">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-input" placeholder="your@email.com" />
+              <label class="form-label" for="email">Email</label>
+              <input type="email" class="form-input" id="email" name="email" placeholder="your@email.com" autocomplete="email" required />
             </div>
             <div class="form-field">
-              <label class="form-label">Phone (optional)</label>
-              <input type="tel" class="form-input" placeholder="+44 XXXX XXXXXX" />
+              <label class="form-label" for="phone">Phone (optional)</label>
+              <input type="tel" class="form-input" id="phone" name="phone" placeholder="+44 XXXX XXXXXX" autocomplete="tel" />
             </div>
             <div class="form-field">
-              <label class="form-label">Tell George a bit about your goals</label>
-              <textarea class="form-textarea" placeholder="What do you want to achieve? Where are you starting from?"></textarea>
+              <label class="form-label" for="goals">Tell George a bit about your goals</label>
+              <textarea class="form-textarea" id="goals" name="goals" placeholder="What do you want to achieve? Where are you starting from?"></textarea>
             </div>
             <button type="submit" class="btn btn--primary form-submit">Send Message</button>
           </form>
@@ -1594,18 +1603,35 @@
     }, { threshold: 0.4 });
     sections.forEach(s => so.observe(s));
 
-    // Contact form
+    // Contact form — Formspree AJAX submission
     const form = document.querySelector('.contact-form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const btn = form.querySelector('.form-submit');
-      btn.textContent = 'Sending…'; btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Message Sent ✓';
-        form.reset();
-        setTimeout(() => { btn.textContent = 'Send Message'; btn.disabled = false; }, 3000);
-      }, 1200);
-    });
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = form.querySelector('.form-submit');
+        const original = btn.textContent;
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            btn.textContent = 'Message Sent ✓';
+            form.reset();
+            setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 4000);
+          } else {
+            btn.textContent = 'Something went wrong — try again';
+            btn.disabled = false;
+          }
+        } catch {
+          btn.textContent = 'Something went wrong — try again';
+          btn.disabled = false;
+        }
+      });
+    }
   </script>
 
 </body>

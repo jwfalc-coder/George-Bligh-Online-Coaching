@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200">
+  <title>OG Image Template — George Bligh Online Coaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@300&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+    body {
+      background: #1C1A18;
+      font-family: 'Barlow Condensed', 'Arial Narrow', Impact, sans-serif;
+      display: flex;
+      align-items: flex-end;
+      padding: 68px 80px;
+      position: relative;
+    }
+
+    /* Top amber stripe */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: #D4823A;
+    }
+
+    /* Ambient amber glow — right side */
+    .glow {
+      position: absolute;
+      top: 0; right: -80px;
+      width: 640px; height: 630px;
+      background: radial-gradient(ellipse at 75% 40%, rgba(212,130,58,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Receding accent lines — bottom right geometry */
+    .lines {
+      position: absolute;
+      right: 80px;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 11px;
+    }
+    .lines span {
+      display: block;
+      height: 1px;
+      background: #D4823A;
+    }
+    .lines span:nth-child(1) { width: 160px; opacity: 0.45; }
+    .lines span:nth-child(2) { width: 100px; opacity: 0.28; }
+    .lines span:nth-child(3) { width: 50px;  opacity: 0.15; }
+
+    .content { position: relative; z-index: 1; }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .eyebrow-line {
+      width: 38px; height: 2px;
+      background: #D4823A;
+      flex-shrink: 0;
+    }
+    .eyebrow-text {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #D4823A;
+    }
+
+    h1 {
+      font-size: 132px;
+      font-weight: 800;
+      color: #F0EBE3;
+      text-transform: uppercase;
+      line-height: 0.88;
+      letter-spacing: -1px;
+      margin-bottom: 32px;
+    }
+    h1 em {
+      font-style: normal;
+      color: #D4823A;
+      display: block;
+    }
+
+    .sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 21px;
+      color: #A89E92;
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 500px;
+    }
+
+    /* Domain — top right */
+    .domain {
+      position: absolute;
+      top: 44px; right: 80px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #4A4540;
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="lines">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">1-to-1 Online Personal Trainer</div>
+    </div>
+    <h1>George<em>Bligh</em></h1>
+    <p class="sub">Personalised coaching built around your life — real programmes, real accountability, real results.</p>
+  </div>
+
+  <div class="domain">georgeblighcoaching.co.uk</div>
+</body>
+</html>
+
+<!--
+  HOW TO USE THIS FILE:
+  1. Open this file in Chrome / Edge
+  2. Open DevTools → toggle device toolbar (Ctrl+Shift+M)
+  3. Set to exactly 1200 × 630
+  4. Screenshot (or use "Capture screenshot" in DevTools)
+  5. Save as og-image.jpg — place in assets/images/og-image.jpg
+  6. Commit and push
+-->
