@@ -1,6 +1,8 @@
-# George Bligh Online Coaching — Website
+# George Bligh Online Coaching
 
-Personal training and online coaching website for George Bligh. Built as a single-page site with sticky navigation, deployed via GitHub Pages initially, then migrated to a custom domain via Cloudflare once secured.
+Live site: **[georgeblighcoaching.co.uk](https://georgeblighcoaching.co.uk)**
+
+Single-page personal training website for George Bligh. No framework, no build step - vanilla HTML, CSS, and JS, deployed via Cloudflare Pages with auto-deploy on every push to `main`.
 
 ---
 
@@ -8,12 +10,12 @@ Personal training and online coaching website for George Bligh. Built as a singl
 
 | Layer | Choice |
 |---|---|
-| HTML | Semantic HTML5, single `index.html` |
-| CSS | Vanilla CSS with custom properties, no framework |
-| JS | Vanilla JS, no dependencies |
-| Fonts | Google Fonts — Barlow Condensed + DM Sans |
-| Deployment | GitHub Pages → Cloudflare + custom domain |
-| Forms | Pending — see pre-launch checklist |
+| HTML/CSS/JS | Vanilla, single `index.html`, no dependencies |
+| Fonts | Google Fonts - Barlow Condensed 800 (display) + DM Sans 300 (body), loaded async |
+| Forms | Formspree AJAX (`/f/mdaqkean`) |
+| Email | Cloudflare Email Routing forwarded to Hotmail |
+| Hosting | Cloudflare Pages (auto-deploys on push to `main`) |
+| Domain | Fasthosts registrar, Cloudflare nameservers |
 
 ---
 
@@ -21,491 +23,39 @@ Personal training and online coaching website for George Bligh. Built as a singl
 
 ```
 /
-├── index.html             Main site (one-pager with anchor nav)
-├── template.html          Reusable starting point for future pages
-├── style.css              Global design system and component styles
-├── main.js                Global JavaScript (nav, scroll reveal, form)
-├── .nojekyll              Bypasses Jekyll on GitHub Pages
+├── index.html
+├── sitemap.xml
+├── robots.txt
 ├── assets/
 │   ├── images/
-│   │   ├── hero.webp          Hero section photo
-│   │   ├── about-main.webp    About section main photo
-│   │   ├── about-secondary.webp
-│   │   ├── gallery-1.webp
-│   │   ├── gallery-2.webp     (and so on)
-│   │   └── og-image.jpg       Social share preview (JPEG, not WebP)
-│   └── favicons/
-│       ├── favicon-32.png
-│       ├── favicon-16.png
-│       └── apple-touch-icon.png
+│   │   ├── Hero 1080w x 2021h px.webp          Desktop hero (portrait)
+│   │   ├── Hero 1to1 Mobile.webp                Mobile hero (square, served <=860px)
+│   │   ├── About Main 1077w x 1915h px.webp
+│   │   ├── about-main-600.webp                  Responsive variant (600px wide)
+│   │   ├── About Secondary 1282x1282.webp
+│   │   ├── Gallery 1-5 *.webp                   Full-res gallery images
+│   │   ├── gallery-1-540.webp ... gallery-5-540.webp   Mobile variants (540px wide)
+│   │   ├── Social meta Image.webp               OG/social share image
+│   │   └── Favicon.webp
+│   ├── logo.svg
+│   └── og-template.html                         Source template for OG image
 └── README.md
 ```
 
 ---
 
-## Images and Assets
-
-Because this is a static site, all images live in the repository under `assets/images/` and are referenced with relative paths in the HTML:
-
-```html
-<img src="assets/images/hero.webp" alt="George Bligh online personal trainer" width="900" height="1080" />
-```
-
-GitHub Pages serves the whole repo as a file tree, so anything committed to the repo is immediately available on the live site after push.
-
----
-
-### Image formats
-
-Use **WebP** for all photos. It produces smaller file sizes than JPEG or PNG at equivalent quality — typically 25–35% smaller — which matters on mobile connections. The only exception is the Open Graph image (`og-image.jpg`), which should remain JPEG as some social platforms do not support WebP previews.
-
-For the gallery and hero, provide a JPEG fallback using the `<picture>` element for full browser coverage:
-
-```html
-<picture>
-  <source srcset="assets/images/hero.webp" type="image/webp" />
-  <img src="assets/images/hero.jpg" alt="George Bligh online personal trainer" width="900" height="1080" />
-</picture>
-```
-
----
-
-### Required images and dimensions
-
-| Image | File | Dimensions | Notes |
-|---|---|---|---|
-| Hero photo | `hero.webp` | 900 × 1080px | Portrait, George in action or strong solo shot |
-| About (main) | `about-main.webp` | 700 × 900px | Portrait orientation |
-| About (secondary) | `about-secondary.webp` | 500 × 500px | Optional — can be removed |
-| Gallery 1–6+ | `gallery-1.webp` etc. | Any — see below | Ensure subjects are centred (see note) |
-| Open Graph | `og-image.jpg` | 1200 × 630px | JPEG only, used for social sharing previews |
-| Testimonial avatar | `testimonial-1.webp` | 96 × 96px | Square, will be cropped circular by CSS |
-
-**Gallery note:** on desktop the gallery uses varied aspect ratios (wide, tall, square). On tablet and mobile it reflows to a uniform 1:1 square grid. Make sure the subject in every gallery photo is centred in the frame so it crops cleanly to a square without losing faces or important detail.
-
----
-
-### Workflow — when George sends photos
-
-1. **Receive** the original files (likely JPEG from a phone)
-2. **Resize** to the target dimensions using [Squoosh](https://squoosh.app) or any image editor
-3. **Compress and convert to WebP** — in Squoosh, select WebP as the output format, quality around 80–85. Target under 200KB per image; the hero can go up to 300KB given its prominence
-4. **Also export a JPEG fallback** at the same dimensions for the `<picture>` element (quality 75–80 in Squoosh)
-5. **Drop files into** `assets/images/` in the repo
-6. **Replace placeholder divs** in `index.html` with proper `<img>` or `<picture>` tags, adding descriptive `alt` text to each
-7. **Commit and push** — the change is live on GitHub Pages within a minute or two
-
----
-
-### Alt text guidance
-
-Every image needs an `alt` attribute. Keep it descriptive and natural — write what the image actually shows, not keyword strings:
-
-```html
-<!-- Good -->
-<img alt="George Bligh demonstrating a deadlift technique for an online coaching client" />
-
-<!-- Bad -->
-<img alt="personal trainer UK online coaching fitness" />
-```
-
-Alt text serves two purposes: screen reader accessibility, and a secondary SEO signal. Both reward plain-English descriptions over keyword stuffing.
-
----
-
-No build step required. Open `index.html` directly in a browser, or use a simple local server to avoid font/asset path issues:
-
-```bash
-# Python (built in)
-python -m http.server 8000
-
-# Node (if installed)
-npx serve .
-```
-
----
-
-## Deployment
-
-### GitHub Pages (current)
-
-1. Push to `main` branch
-2. Go to repo **Settings → Pages**
-3. Set source to `main` branch, root `/`
-4. Site will be live at `https://jwfalc-coder.github.io/George-Bligh-Online-Coaching`
-
-### Custom Domain via Cloudflare (once domain is secured)
-
-1. Purchase domain (e.g. `georgeblighcoaching.com`)
-2. Add domain to Cloudflare and point nameservers
-3. In GitHub Pages settings, add custom domain
-4. GitHub will auto-generate a `CNAME` file in the repo
-5. In Cloudflare DNS, add a `CNAME` record pointing `www` → `jwfalc-coder.github.io` with proxy **off** (DNS only) during setup
-6. Enable HTTPS in GitHub Pages settings once DNS propagates
-7. Switch Cloudflare proxy back on for CDN and DDoS protection
-
----
-
-## Email Setup (info@ address)
-
-GitHub Pages only serves static files — there is no mail server involved. Cloudflare handles DNS but does not host email by default. The `info@yourdomain.com` address needs to be configured separately. Three options are listed below, from simplest to most fully-featured.
-
----
-
-### Option 1 — Cloudflare Email Routing (recommended, free)
-
-Cloudflare's built-in email routing forwards any mail sent to `info@yourdomain.com` straight to an existing inbox (e.g. George's personal Gmail). No separate email provider, no new apps, no monthly cost.
-
-**Limitation:** receive only. George cannot *send* from `info@` unless he configures a Gmail "Send mail as" alias (see below).
-
-**Setup steps:**
-
-1. In the Cloudflare dashboard, go to **Email → Email Routing**
-2. Click **Get started** and follow the wizard
-3. Cloudflare will automatically add the required `MX` and `TXT` DNS records
-4. Under **Routing rules**, add a custom address: `info@yourdomain.com` → forward to George's personal email
-5. Verify the destination address when prompted (Cloudflare sends a confirmation link)
-6. Done — emails to `info@` will arrive in George's existing inbox within minutes
-
-**Optional — send from `info@` via Gmail:**
-
-1. In Gmail, go to **Settings → Accounts → Send mail as → Add another email address**
-2. Enter `info@yourdomain.com`, untick "Treat as alias"
-3. Use `smtp.gmail.com` as the SMTP server with George's Gmail credentials
-4. Gmail will send a verification code to `info@` — it will arrive via the forwarding rule above
-5. Once verified, George can choose `info@yourdomain.com` as the From address when composing
-
----
-
-### Option 2 — Google Workspace (~£5–6/month)
-
-A full `info@yourdomain.com` mailbox George can send and receive from, using the standard Gmail interface. Most professional option if email is a primary client communication channel.
-
-**Setup steps:**
-
-1. Sign up at [workspace.google.com](https://workspace.google.com) and select the Starter plan
-2. Enter the domain when prompted — Google will provide DNS records to add in Cloudflare
-3. In Cloudflare DNS, add the `MX` records Google provides (delete any existing MX records first)
-4. Add the `TXT` verification record to confirm domain ownership
-5. Complete setup in the Google Workspace Admin console
-6. `info@yourdomain.com` is live — access via Gmail or any mail client
-
----
-
-### Option 3 — Zoho Mail (free for single domain)
-
-Full send/receive custom email with no monthly cost. Slightly more setup than Cloudflare routing but a reasonable middle ground.
-
-**Setup steps:**
-
-1. Sign up at [zoho.com/mail](https://www.zoho.com/mail/) and choose the Free plan
-2. Add the domain and follow Zoho's DNS verification steps
-3. In Cloudflare DNS, add the `MX`, `SPF`, and `DKIM` records Zoho provides
-4. Create the `info@` mailbox in the Zoho admin panel
-5. Access mail via [mail.zoho.eu](https://mail.zoho.eu) or configure a mail client
-
----
-
-### Which to choose
-
-| | Cloudflare Routing | Google Workspace | Zoho Mail |
-|---|---|---|---|
-| Cost | Free | ~£5–6/month | Free |
-| Send from `info@` | Via Gmail alias | Yes, natively | Yes, natively |
-| Setup complexity | Very simple | Simple | Moderate |
-| Best for | Forwarding only, keeping things lean | Professional daily use | Full mailbox without cost |
-
-**Recommendation:** start with Cloudflare Email Routing. It takes under five minutes, costs nothing, and means all contact form submissions and direct emails land in George's existing inbox. Upgrade to Google Workspace if he needs to actively send from `info@` at scale.
-
-> **Note:** whichever option is chosen, the contact form on the site routes through a separate service (Formspree etc.) and is not affected by the email setup. They are independent.
-
----
-
-## Pre-Launch Checklist
-
-Everything below must be resolved before the site goes live. Items are grouped by priority.
-
----
-
-### 🔴 Critical — site will not function correctly without these
-
-#### Content
-- [ ] **Hero photo** — replace placeholder. Recommended size: `900 × 1080px`. Portrait orientation, George in action or strong solo shot.
-- [ ] **About photo (main)** — replace placeholder. Recommended: `700 × 900px`.
-- [ ] **About photo (secondary)** — optional overlapping accent image. Recommended: `500 × 500px`. Can be removed entirely if not needed.
-- [ ] **Gallery photos** — minimum 6 images. At desktop, grid uses varied aspect ratios (see placeholders for sizes). At tablet/mobile, all images display as 1:1 squares — ensure subjects are centred so square cropping works.
-- [x] **Testimonial** — Harry's quote live. Author photo placeholder remains (48 × 48px) — add when available, or remove slot if not needed.
-- [ ] **Contact details** — replace all placeholders in the contact section and footer:
-  - Phone: ✅ `+44 7711 773900` — done
-  - WhatsApp: ✅ `https://wa.me/447711773900` — done
-  - Email: ⏳ `info@georgeblighcoaching.com` — in the HTML, pending domain and email setup
-- [ ] **Social media URLs** — ✅ All four links (Instagram, TikTok, Facebook, LinkedIn) updated in both hero and footer
-
-#### Contact Form
-- [ ] **Wire up the form** — the form currently simulates a send with a timeout. It does not actually send anything. Choose one of:
-  - **[Formspree](https://formspree.io)** (free tier, easy, no backend needed) — add `action="https://formspree.io/f/YOUR_ID"` to the `<form>` tag and remove the JS submit handler
-  - **[EmailJS](https://emailjs.com)** (free tier, sends directly from JS) — add SDK and update `main.js`
-  - **Netlify Forms** (if hosting moves to Netlify) — add `netlify` attribute to `<form>`
-  - Custom backend endpoint
-
----
-
-### 🟡 Important — affects SEO, trust, and professionalism
-
-#### SEO
-- [ ] Complete all items in the **SEO** section of this README (see below)
-- [ ] All images have descriptive `alt` text (see Images and Assets section)
-
-#### Favicon & Brand
-- [ ] **Favicon** — currently commented out. Once a logo is created, export:
-  - `favicon-32.png` (32 × 32px)
-  - `favicon-16.png` (16 × 16px)
-  - `apple-touch-icon.png` (180 × 180px)
-  - Optionally a `favicon.ico` for legacy browser support
-  - Uncomment the `<link>` tags in `<head>`
-- [ ] **Logo** — George has no logo currently. Options:
-  - Commission a designer
-  - Create a typographic logo using the existing Barlow Condensed font treatment
-  - Use current text-only nav treatment as permanent brand identity (acceptable)
-
-#### Legal
-- [ ] **Footer year** — update `© 2025` if launch is in a different year, or make it dynamic with JS: `document.write(new Date().getFullYear())`
-- [ ] **Privacy Policy** — required if the contact form collects personal data (name, email). Minimum: a simple page stating what data is collected, why, and how long it is kept. GDPR applies.
-- [ ] **Cookie notice** — if Google Analytics or any third-party tracking is added later, a cookie consent banner is required under UK/EU law. Not needed in the current no-tracking build.
-- [ ] **Business address** — consider whether to include a business address in the footer (not required for a sole trader operating online, but adds trust).
-
----
-
-### 🟢 Nice to have — improve experience and growth
-
-#### Performance
-- [ ] **Compress all images** — run every photo through [Squoosh](https://squoosh.app) or [TinyPNG](https://tinypng.com) before uploading. Target under 200KB per image.
-- [ ] **Convert images to WebP** — better compression than JPEG/PNG. Add JPEG fallback for older browsers using `<picture>` element.
-- [ ] **Lazy load gallery images** — add `loading="lazy"` attribute to all `<img>` tags outside the initial viewport.
-- [ ] **Preload hero image** — add `<link rel="preload" as="image" href="...">` in `<head>` for the hero photo to improve LCP score.
-- [ ] **Self-host fonts (optional)** — Google Fonts loads from a third-party server. For maximum performance and privacy, download and self-host Barlow Condensed and DM Sans.
-
-#### Analytics
-- [ ] **Google Analytics 4** — add GA4 tracking snippet once domain is live. Create property at [analytics.google.com](https://analytics.google.com). Paste the `gtag.js` snippet before `</head>`.
-- [ ] **Goal tracking** — set up conversion events in GA4 for form submissions and WhatsApp/phone link clicks.
-
-#### Features (future)
-- [ ] **Gallery lightbox** — clicking a gallery image should open it full-size with a close button. Placeholder slots are already 1:1 on mobile. A lightweight library like [GLightbox](https://biati-digital.github.io/glightbox/) or a custom implementation can be dropped in.
-- [ ] **More testimonials** — the current build shows one quote. A carousel or a 2–3 card grid would strengthen social proof as more reviews come in.
-- [ ] **Blog / tips section** — George mentioned he's open to adding more as the business grows. A simple `/blog/` folder with individual HTML pages using `template.html` is all that's needed.
-- [ ] **WhatsApp floating button** — a fixed bottom-right WhatsApp icon for instant mobile contact. High conversion on mobile PT sites.
-- [ ] **Booking integration** — if George moves to an online booking system (Calendly, Acuity, etc.), the "Book a Free Call" CTA can link directly to a booking page or embed a widget.
-
----
-
-## SEO
-
-The goal is for George to rank nationally across the UK for online personal training and coaching searches — not just locally. Portsmouth appears in the About section copy to add authenticity to his story, but the primary keyword focus is online and UK-wide. Local terms ("Portsmouth personal trainer") are secondary and should not dominate.
-
----
-
-### Keyword strategy
-
-Target keywords fall into three tiers:
-
-**Primary — highest intent, national:**
-- online personal trainer UK
-- online personal training UK
-- online fitness coach UK
-- online weight loss coach UK
-- online strength and conditioning coach
-- 1-to-1 online personal trainer
-
-**Secondary — problem/goal-led (high conversion):**
-- personal trainer for busy professionals
-- online personal trainer for weight loss
-- online personal trainer for muscle building
-- online personal trainer over 40
-- personalised online training programme
-- online nutrition and fitness coaching
-
-**Tertiary — trust and credibility:**
-- Level 3 personal trainer online
-- affordable online personal trainer UK
-- online PT with weekly check-ins
-
-Portsmouth terms are fine as incidental mentions in body copy and structured data, but should not appear in the page title or meta description.
-
----
-
-### On-page SEO — what to implement
-
-#### Page title
-
-```html
-<title>George Bligh | Online Personal Trainer UK</title>
-```
-
-Keep it under 60 characters. Lead with the brand name, follow with the primary keyword. No need to mention Portsmouth here.
-
-#### Meta description
-
-```html
-<meta name="description" content="Online personal training and nutrition coaching built around your lifestyle. 1-to-1 programmes, weekly check-ins, and real results — wherever you are in the UK." />
-```
-
-140–160 characters. Focus on the value proposition and the national reach. Include a natural call to action or benefit statement.
-
-#### Heading hierarchy
-
-The `<h1>` on the page ("Train Smart. Live Better.") is strong as a brand statement but weak as a search signal. Once real content is in place, consider whether a subtitle or supporting line closer to the fold can include a primary keyword naturally — e.g. a subheading in the services section: "Online Personal Training Built Around Your Life".
-
-The heading structure across the page should follow a logical `h1 → h2 → h3` hierarchy with no skipped levels. Do not use heading tags purely for visual size.
-
-#### Canonical URL
-
-```html
-<link rel="canonical" href="https://yourdomain.com/" />
-```
-
-Update once the domain is confirmed. Use the `www` or non-`www` version consistently — whichever Cloudflare is configured to serve — and stick to it.
-
-#### Open Graph tags
-
-Used by social platforms when the link is shared. Update all four:
-
-```html
-<meta property="og:title"       content="George Bligh | Online Personal Trainer UK" />
-<meta property="og:description" content="1-to-1 online personal training and nutrition coaching. Real programmes built around your life, wherever you are in the UK." />
-<meta property="og:url"         content="https://yourdomain.com/" />
-<meta property="og:image"       content="https://yourdomain.com/assets/images/og-image.jpg" />
-```
-
-The `og:image` should be a 1200 × 630px JPEG — typically a strong photo of George with the brand name overlaid, or a clean branded graphic. This is what appears in link previews on Instagram, Facebook, WhatsApp, iMessage etc.
-
-#### Structured data (JSON-LD)
-
-Add the following block inside a `<script type="application/ld+json">` tag in the `<head>`. This tells Google exactly what type of business this is, what services are offered, and how to reach George. It directly feeds the Knowledge Panel and rich results.
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "George Bligh",
-  "jobTitle": "Online Personal Trainer",
-  "description": "Online personal trainer and nutrition coach offering 1-to-1 coaching, personalised training programmes, and weekly check-ins to clients across the UK.",
-  "url": "https://yourdomain.com",
-  "image": "https://yourdomain.com/assets/images/about-main.webp",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Portsmouth",
-    "addressCountry": "GB"
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "United Kingdom"
-  },
-  "sameAs": [
-    "https://www.instagram.com/georgefitzness/",
-    "https://www.tiktok.com/@georgefitnezz",
-    "https://www.facebook.com/profile.php?id=61587950019337",
-    "https://www.linkedin.com/in/george-bligh/"
-  ],
-  "knowsAbout": [
-    "Personal Training",
-    "Online Coaching",
-    "Nutrition Guidance",
-    "Strength Training",
-    "Weight Loss",
-    "Muscle Building"
-  ]
-}
-```
-
-Replace all `GEORGESHANDLE` placeholders and the domain URL before deploying. The `address` with Portsmouth satisfies Google's desire to understand where George is based, while `areaServed: United Kingdom` signals that he works nationally.
-
----
-
-### Technical SEO
-
-#### Sitemap
-
-Create a `sitemap.xml` in the repo root once the domain is confirmed. For a single-page site it is minimal:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://yourdomain.com/</loc>
-    <lastmod>2025-01-01</lastmod>
-    <priority>1.0</priority>
-  </url>
-</urlset>
-```
-
-Update `<lastmod>` whenever significant content changes. Add new `<url>` entries as new pages are added.
-
-Then reference it in `index.html`:
-
-```html
-<!-- In <head> -->
-<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-```
-
-#### robots.txt
-
-Add a `robots.txt` in the repo root:
-
-```
-User-agent: *
-Allow: /
-Sitemap: https://yourdomain.com/sitemap.xml
-```
-
-This is fine for a site with no private pages. No crawling restrictions needed.
-
-#### Google Search Console
-
-1. Go to [search.google.com/search-console](https://search.google.com/search-console)
-2. Add property using the domain option (requires Cloudflare DNS access to add a TXT record)
-3. Once verified, submit the sitemap URL
-4. Monitor for crawl errors, indexing status, and which queries are driving impressions
-
-Do this on launch day — it can take a few days for Google to crawl and index, and Search Console gives visibility into that process.
-
-#### Page speed
-
-Core Web Vitals (LCP, CLS, FID) are a confirmed Google ranking factor. The current build is lean enough to score well out of the box, but the main risk is unoptimised images. Once real photos are in place, run the site through [PageSpeed Insights](https://pagespeed.web.dev) and target a score above 90 on mobile. The most common fixes are:
-
-- Image compression (see Images and Assets section)
-- Adding `width` and `height` attributes to all `<img>` tags (prevents layout shift)
-- Preloading the hero image (see checklist)
-
-Cloudflare's proxy handles caching and minification automatically once enabled, which takes care of most other performance recommendations.
-
----
-
-### Off-page SEO (George's part)
-
-Technical SEO is only part of the picture. These are the things George can do himself to build authority over time:
-
-- **Google Business Profile** — create a free listing at [business.google.com](https://business.google.com). Even as an online-only business, a verified profile helps with branded searches and adds credibility. List the service area as United Kingdom.
-- **Social profiles** — ensure Instagram, TikTok, Facebook, and LinkedIn bios all link back to the website. These are treated as trust signals.
-- **Content on social** — TikTok and Instagram content that drives traffic to the site is one of the fastest ways to build domain authority for a new site. Short-form video demonstrating expertise performs well in the PT space.
-- **Client testimonials with names** — named, attributed testimonials on the site carry more SEO and trust weight than anonymous quotes. Worth encouraging clients to also leave a Google review on the Business Profile.
-- **Backlinks** — any time the business is mentioned on another site (a gym's website, a local directory, a press mention), ask for a link back to the site. Even a handful of relevant backlinks significantly accelerates ranking for a new domain.
-
----
-
-| Token | Value | Usage |
-|---|---|---|
-| `--bg` | `#1C1A18` | Page background |
-| `--bg-raised` | `#242220` | Alternate section background |
-| `--bg-card` | `#2C2926` | Card and component background |
-| `--accent` | `#D4823A` | Amber — primary brand colour |
-| `--accent-dim` | `#A8632B` | Amber hover state |
-| `--text-primary` | `#F0EBE3` | Headings and key text |
-| `--text-secondary` | `#A89E92` | Body copy |
-| `--text-muted` | `#6B6059` | Labels, captions, placeholders |
-| `--border` | `#3A3632` | Default borders |
-| `--border-light` | `#4A4540` | Hover/active borders |
-
-Fonts: **Barlow Condensed** (headings, all-caps) + **DM Sans** (body, light weight)
+## Features
+
+- **Sticky nav** with smooth-scroll anchor links and hamburger menu on mobile
+- **Hero** - desktop uses a tall portrait image; mobile switches to a 1:1 square crop via `<picture>` element
+- **Scroll-reveal animations** - sections fade up as they enter the viewport
+- **Stats strip** - four key figures (experience, coaching style, flexibility, support)
+- **About section** - two-image stack (main portrait + overlapping square accent image)
+- **Services grid** - six service cards with numbered labels
+- **Results section** - outcome list + client testimonial
+- **Gallery** - 3-column asymmetric grid on desktop; horizontal swipe carousel with dot navigation and 2-second autoplay on mobile
+- **Contact section** - phone, email, and WhatsApp links + Formspree AJAX form with honeypot spam protection
+- **Footer** - logo, copy, social links, built-by credit
 
 ---
 
@@ -513,11 +63,53 @@ Fonts: **Barlow Condensed** (headings, all-caps) + **DM Sans** (body, light weig
 
 | Breakpoint | Behaviour |
 |---|---|
-| `> 860px` | Full desktop layout, horizontal nav |
-| `≤ 860px` | Stacked layout, hamburger menu, 3-col square gallery |
-| `≤ 560px` | Further simplification, 2-col square gallery, buttons full width |
-| `≤ 380px` | Single column gallery, hero socials hidden |
+| `> 860px` | Full desktop layout, side-by-side hero, 3-col gallery grid |
+| `<= 860px` | Stacked layout, hamburger menu, mobile hero image, 3-col square gallery |
+| `<= 560px` | Carousel gallery, full-width buttons, about secondary image inset |
+| `<= 380px` | Hero socials hidden, carousel cards widen to 85vw |
 
 ---
 
-*Built by Josh Falconer. Questions or changes — raise an issue or push a branch.*
+## Images
+
+All images are WebP. Responsive variants are generated with Pillow and wired via `srcset`/`sizes` so the browser picks the right size automatically.
+
+| Image | Served on | File size |
+|---|---|---|
+| Hero portrait | Desktop (>860px) | 323KB |
+| Hero 1:1 square | Mobile (<=860px) | 119KB |
+| About Main full-res | Desktop | 463KB |
+| about-main-600 | Mobile | 58KB |
+| Gallery 1-5 full-res | Desktop | 444-635KB each |
+| gallery-1-5-540 | Mobile | 31-73KB each |
+
+---
+
+## Design Tokens
+
+| Token | Value | Usage |
+|---|---|---|
+| `--bg` | `#1C1A18` | Page background |
+| `--bg-raised` | `#242220` | Alternate section background |
+| `--bg-card` | `#2C2926` | Cards and footer |
+| `--accent` | `#D4823A` | Amber - primary brand colour |
+| `--text-primary` | `#F0EBE3` | Headings and key text |
+| `--text-secondary` | `#A89E92` | Body copy |
+| `--text-muted` | `#6B6059` | Labels, placeholders |
+| `--border` | `#3A3632` | Borders |
+
+---
+
+## Making Changes
+
+Any push to `main` triggers a Cloudflare Pages deploy - usually live within 60 seconds.
+
+**Updating copy:** edit text directly in `index.html`. British English, first person (George's voice), hyphens not em dashes.
+
+**Replacing images:** upload via the GitHub web UI to `assets/images/`, then update the `src`/`srcset` in `index.html`. For large new images, generate a smaller variant with Pillow (see the existing gallery/about pattern at 540px/600px) and add it to the `srcset`.
+
+**Contact form:** submissions go to Formspree form `mdaqkean`, forwarded to `info@georgeblighcoaching.co.uk` via Cloudflare Email Routing.
+
+---
+
+*Built by [Josh Falconer](https://www.linkedin.com/in/joshua-w-falconer/)*
