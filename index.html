@@ -978,7 +978,7 @@
 
     .footer__copy {
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
 
     .footer__socials {
@@ -991,7 +991,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       transition: color 0.25s;
     }
     .footer__social-link:hover { color: var(--accent); }
@@ -1519,12 +1519,12 @@
                width="1080" height="1947" loading="lazy" />
         </div>
       </div>
-      <div class="gallery__dots" aria-hidden="true">
-        <button class="gallery__dot gallery__dot--active" data-index="0"></button>
-        <button class="gallery__dot" data-index="1"></button>
-        <button class="gallery__dot" data-index="2"></button>
-        <button class="gallery__dot" data-index="3"></button>
-        <button class="gallery__dot" data-index="4"></button>
+      <div class="gallery__dots" role="group" aria-label="Gallery navigation">
+        <button class="gallery__dot gallery__dot--active" data-index="0" aria-label="Slide 1" aria-current="true"></button>
+        <button class="gallery__dot" data-index="1" aria-label="Slide 2" aria-current="false"></button>
+        <button class="gallery__dot" data-index="2" aria-label="Slide 3" aria-current="false"></button>
+        <button class="gallery__dot" data-index="3" aria-label="Slide 4" aria-current="false"></button>
+        <button class="gallery__dot" data-index="4" aria-label="Slide 5" aria-current="false"></button>
       </div>
     </div>
   </section>
@@ -1608,7 +1608,7 @@
     <div class="container">
       <div class="footer__inner">
         <div class="footer__logo">George Bligh <span>Online Coaching</span></div>
-        <p class="footer__copy">© 2026 George Bligh Online Coaching. Based in Portsmouth. <a href="https://www.linkedin.com/in/joshua-w-falconer/" target="_blank" rel="noopener noreferrer" style="color:inherit;opacity:0.5;text-decoration:none;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">Built by Josh</a></p>
+        <p class="footer__copy">© 2026 George Bligh Online Coaching. Based in Portsmouth. <a href="https://www.linkedin.com/in/joshua-w-falconer/" target="_blank" rel="noopener noreferrer" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:3px;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">Built by Josh</a></p>
         <div class="footer__socials">
           <a href="https://www.instagram.com/georgefitzness/" target="_blank" rel="noopener noreferrer" class="footer__social-link">Instagram</a>
           <a href="https://www.tiktok.com/@georgefitnezz" target="_blank" rel="noopener noreferrer" class="footer__social-link">TikTok</a>
@@ -1710,7 +1710,10 @@
 
       function setActive(i) {
         active = i;
-        dots.forEach((d, j) => d.classList.toggle('gallery__dot--active', j === i));
+        dots.forEach(function (d, j) {
+          d.classList.toggle('gallery__dot--active', j === i);
+          d.setAttribute('aria-current', j === i ? 'true' : 'false');
+        });
       }
 
       function goTo(i) {
